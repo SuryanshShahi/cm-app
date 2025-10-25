@@ -1,12 +1,12 @@
-import {Dispatch, SetStateAction} from 'react';
-import {ICustomerProfile} from '../screens/customer/types';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface IGlobalContext {
   data: {
-    customerDetails: ICustomerProfile | null;
+    userDetails: any | null;
+    isLoggedIn: boolean;
     [key: string]: any;
   } | null;
-  setData: Dispatch<SetStateAction<{[key: string]: any} | null>>;
+  setData: Dispatch<SetStateAction<{ [key: string]: any } | null>>;
 }
 export interface IAuthContext {
   isLoggedIn: any;
