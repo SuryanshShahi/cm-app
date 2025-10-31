@@ -21,6 +21,7 @@ interface ISelectDate {
   isValidRange?: boolean;
   required?: boolean;
   containerClassName?: string;
+  className?: string;
 }
 const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
   isMultipleDays,
@@ -36,9 +37,10 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
   date,
   placeholder,
   containerClassName,
+  className,
 }) => {
   return (
-    <View>
+    <View style={tw.style(className)}>
       {children ? (
         children
       ) : (

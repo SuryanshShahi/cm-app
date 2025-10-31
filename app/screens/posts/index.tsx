@@ -25,7 +25,11 @@ const Posts = () => {
             />
             <View style={tw`p-4 gap-y-4`}>
               <View style={tw`flex-row gap-x-6`}>
-                <Octicons name={isLiked ? 'heart-fill' : 'heart'} size={24} />
+                <Octicons
+                  name={isLiked ? 'heart-fill' : 'heart'}
+                  size={24}
+                  onPress={() => setIsLiked(!isLiked)}
+                />
                 <MaterialCommunityIcons name="comment-text-outline" size={24} />
                 <Feather name="share-2" size={24} style={tw`text-brand`} />
               </View>

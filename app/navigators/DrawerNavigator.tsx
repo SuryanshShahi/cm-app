@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { Button } from '../shared';
 import ScreenNames from '../utils/ScreenNames';
 import BottomNavigator from './customer/BottomNavigator';
+import EventDetails from '../screens/event/eventDetails';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -40,6 +41,14 @@ const DrawerNavigator = () => {
       <Screen
         name={ScreenNames.HOME_NAVIGATOR}
         component={BottomNavigator}
+        options={{
+          headerShown: true,
+          header: () => <></>,
+        }}
+      />
+      <Screen
+        name={ScreenNames.EVENT_DETAILS}
+        component={EventDetails}
         options={{
           headerShown: true,
           header: () => <></>,
