@@ -5,11 +5,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#22303E',
+        primary: '#000000',
         secondary: '#475467',
         tertiary: '#667085',
         bgColor: '#F9F9F9',
-        brand: '#FFB82D',
+        brand: '#F47216',
         'yellow-primary': '#FBF31C',
       },
       scrollPadding: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, {Path} from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 export function SvgHome(props: any) {
   return (
@@ -9,7 +9,8 @@ export function SvgHome(props: any) {
       height={25}
       viewBox="0 0 25 25"
       fill="none"
-      {...props}>
+      {...props}
+    >
       <Path d="M21.33 8.26l-6.55-5.24C13.5 2 11.5 1.99 10.23 3.01L3.68 8.26c-.94.75-1.51 2.25-1.31 3.43l1.26 7.54c.29 1.69 1.86 3.02 3.57 3.02h10.6c1.69 0 3.29-1.36 3.58-3.03l1.26-7.54c.18-1.17-.39-2.67-1.31-3.42zm-8.08 9.99c0 .41-.34.75-.75.75s-.75-.34-.75-.75v-3c0-.41.34-.75.75-.75s.75.34.75.75v3z" />
     </Svg>
   );
@@ -22,7 +23,8 @@ export function SvgPassword(props: any) {
       height={14}
       viewBox="0 0 12 14"
       fill="none"
-      {...props}>
+      {...props}
+    >
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -39,7 +41,8 @@ export function SvgEmail(props: any) {
       height={14}
       viewBox="0 0 15 14"
       fill="none"
-      {...props}>
+      {...props}
+    >
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -56,7 +59,8 @@ export function SvgSearch(props: any) {
       height={18}
       viewBox="0 0 18 18"
       fill="none"
-      {...props}>
+      {...props}
+    >
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -73,7 +77,8 @@ export function SvgArrow(props: any) {
       height={25}
       viewBox="0 0 24 25"
       fill="none"
-      {...props}>
+      {...props}
+    >
       <Path
         d="M15 20.848l-6.52-6.52c-.77-.77-.77-2.03 0-2.8L15 5.008"
         strokeWidth={1.5}
@@ -81,6 +86,20 @@ export function SvgArrow(props: any) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </Svg>
+  );
+}
+export function SvgLanguage(props: any) {
+  return (
+    <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path d="M21.055 12h-2a1 1 0 000 2v2h-1.184c.119-.32.18-.659.184-1a3 3 0 00-5.597-1.5 1 1 0 101.732 1 1 1 0 11.865 1.5 1 1 0 000 2 1 1 0 11-.865 1.5 1 1 0 10-1.732 1 3 3 0 005.597-1.5 2.964 2.964 0 00-.184-1h1.184v3a1 1 0 102 0v-7a1 1 0 000-2zm-11.97-.757a1 1 0 101.94-.486l-1.757-7.03a2.28 2.28 0 00-4.425 0l-1.757 7.03a1 1 0 001.939.486L5.585 9h2.94l.56 2.243zM6.086 7l.698-2.787a.292.292 0 01.546 0L8.025 7h-1.94zm7.97 0h1a1.001 1.001 0 011 1v1a1 1 0 102 0V8a3.003 3.003 0 00-3-3h-1a1 1 0 100 2zm-4 9h-1a1.001 1.001 0 01-1-1v-1a1 1 0 10-2 0v1a3.003 3.003 0 003 3h1a1 1 0 000-2z" />
     </Svg>
   );
 }

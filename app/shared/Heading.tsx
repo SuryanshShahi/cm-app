@@ -7,6 +7,7 @@ export interface IHeading {
   color?: 'primary' | 'secondary' | 'tertiary' | 'brand' | 'white' | 'black';
   className?: string;
   children: ReactNode;
+  onPress?: () => void;
 }
 const Heading: FC<PropsWithChildren<IHeading>> = ({
   children,
@@ -14,6 +15,7 @@ const Heading: FC<PropsWithChildren<IHeading>> = ({
   type,
   color = 'primary',
   className,
+  onPress,
   ...rest
 }) => {
   return (

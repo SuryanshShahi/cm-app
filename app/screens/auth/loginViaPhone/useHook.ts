@@ -1,12 +1,12 @@
-import {useMutation} from '@tanstack/react-query';
-import {useFormik} from 'formik';
-import {requestOtp} from '../../../apis';
-import {loginViaPhoneSchema} from '../../../schemas';
-import {showToast} from '../../../utils/constants';
+import { useMutation } from '@tanstack/react-query';
+import { useFormik } from 'formik';
+import { requestOtp } from '../../../apis';
+import { loginViaPhoneSchema } from '../../../schemas';
+import { showToast } from '../../../utils/constants';
 import ScreenNames from '../../../utils/ScreenNames';
-import {IRequestOtp} from '../types';
+import { IRequestOtp } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {localstorageKeys} from '../../../utils/localstorageKeys';
+import { localstorageKeys } from '../../../utils/localstorageKeys';
 
 const useHook = (navigation: any) => {
   const initialValues = {
@@ -14,7 +14,7 @@ const useHook = (navigation: any) => {
   };
   const formProps = useFormik({
     initialValues,
-    validationSchema: loginViaPhoneSchema,
+    // validationSchema: loginViaPhoneSchema,
     enableReinitialize: true,
     validateOnMount: true,
     onSubmit: async data => {
@@ -27,10 +27,11 @@ const useHook = (navigation: any) => {
         registeredDeviceId: registeredDeviceId ?? '',
         type: 'customer',
       };
-      mutate(payload);
+      navigation.navigate(ScreenNames.ENTER_OTP);
+      // mutate(payload);
     },
   });
-  const {mutate, variables, isPending} = useMutation({
+  const { mutate, variables, isPending } = useMutation({
     mutationFn: (body: IRequestOtp) => requestOtp(body),
     onSuccess: res => {
       navigation.navigate(ScreenNames.ENTER_OTP, {
@@ -49,7 +50,7 @@ const useHook = (navigation: any) => {
       });
     },
   });
-  return {...formProps, isPending};
+  return { ...formProps, isPending };
 };
 
 export default useHook;

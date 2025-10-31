@@ -1,11 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useContext } from 'react';
-import { GlobalContext } from '../../context';
+import React from 'react';
+import { View } from 'react-native';
+import Config from '../../../assets/Config';
 import Home from '../../screens/home';
-import Button from '../../shared/buttons';
-import InputField from '../../shared/buttons/InputField';
-import { width } from '../../utils/constants';
-import { Feather } from '../../utils/Icons';
+import Posts from '../../screens/posts';
+import { Heading, Img } from '../../shared';
+import { SvgLanguage, SvgSearch } from '../../svgs';
+import { FontAwesome, Octicons } from '../../utils/Icons';
 import ScreenNames from '../../utils/ScreenNames';
 import tw from '../../utils/tailwind';
 import Header from '../components/Header';
@@ -14,7 +15,6 @@ import { CustomerTabBar } from './TabBar';
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const BottomNavigator = () => {
-  const { setData, data } = useContext(GlobalContext);
   return (
     <Navigator
       screenOptions={{
@@ -25,6 +25,34 @@ const BottomNavigator = () => {
       tabBar={props => <CustomerTabBar {...props} />}
     >
       <Screen name={ScreenNames.HOME} component={Home} />
+      <Screen
+        name={ScreenNames.POSTS}
+        component={Posts}
+        options={{
+          header: () => (
+            <Header
+              icon={
+                <Octicons name="three-bars" size={24} style={tw`text-white`} />
+              }
+            >
+              <View
+                style={tw`flex-row justify-between items-center w-full flex-1 ml-2`}
+              >
+                <Img source={Config.logoWithoutBg} className="h-6 w-6" />
+                <Heading size="2xl" color="white" type="medium">
+                  CM 360
+                </Heading>
+                <View style={tw`flex-row gap-x-3 items-center`}>
+                  <SvgSearch stroke="white" />
+                  <SvgLanguage fill="white" />
+                  <FontAwesome name="bell-o" style={tw`text-white`} size={20} />
+                </View>
+              </View>
+            </Header>
+          ),
+          headerShown: true,
+        }}
+      />
     </Navigator>
   );
 };

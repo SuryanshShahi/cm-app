@@ -16,7 +16,7 @@ const Button: FC<PropsWithChildren<IProps>> = ({
   btnName,
   className,
   isLoading,
-  variant = 'primary',
+  variant = 'brand',
   children,
   styleBtnName,
   icon,
@@ -26,7 +26,7 @@ const Button: FC<PropsWithChildren<IProps>> = ({
       style={tw.style(
         'h-11 px-4 border rounded-lg flex-row gap-x-2 items-center justify-center',
         {
-          'bg-primary text-white border-black': variant === 'primary',
+          'bg-primary text-white border-primary': variant === 'primary',
           'bg-brand border-brand': variant === 'brand',
           'border-gray-200': variant === 'outlined',
           'bg-gray-200 border-transparent': variant === 'disabled',
@@ -44,7 +44,7 @@ const Button: FC<PropsWithChildren<IProps>> = ({
             'font-medium text-base text-center',
             {
               'text-black': variant === 'outlined',
-              'text-white': variant === 'primary',
+              'text-white': variant === 'primary' || variant === 'brand',
               'text-gray-400': variant === 'disabled',
               'opacity-0': Boolean(isLoading),
             },

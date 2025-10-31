@@ -1,11 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import Config from '../../../../assets/Config';
+import { Img } from '../../../shared';
 import Button from '../../../shared/buttons';
-import CardWrapper from '../../../shared/cards/CardWrapper';
+import InputField from '../../../shared/buttons/InputField';
 import Heading from '../../../shared/Heading';
 import tw from '../../../utils/tailwind';
 import useHook from './useHook';
-import InputField from '../../../shared/buttons/InputField';
+import LoginTemplate from '../LoginTemplate';
 
 const LoginViaPhone = ({ navigation }: any) => {
   const {
@@ -18,31 +20,28 @@ const LoginViaPhone = ({ navigation }: any) => {
     isPending,
   } = useHook(navigation);
   return (
-    <>
-      <View style={tw`gap-y-4`}>
-        <Heading size="xl">Merchant Login</Heading>
-        <CardWrapper>
-          <InputField
-            placeholder="Enter Phone Number"
-            label="Phone Number"
-            value={values?.phone}
-            onChangeText={(e: string) => {
-              setFieldValue('phone', e);
-            }}
-            onBlur={handleBlur('phone')}
-            keyboardType="numeric"
-            // errorMessage={errors?.phone && touched?.phone ? errors?.phone : ''}
-          />
-        </CardWrapper>
+    <LoginTemplate>
+      <Heading size="xl">Welcome to CM 360 login</Heading>
+      <View style={tw`w-full mt-10 gap-y-4`}>
+        <InputField
+          placeholder="Enter your Phone no / Email ID"
+          label="Phone No / Email ID"
+          value={values?.phone}
+          onChangeText={(e: string) => {
+            setFieldValue('phone', e);
+          }}
+          onBlur={handleBlur('phone')}
+          keyboardType="numeric"
+          wrapperClassName="w-full"
+          // errorMessage={errors?.phone && touched?.phone ? errors?.phone : ''}
+        />
+        <Button
+          action={handleSubmit}
+          btnName="Continue"
+          isLoading={isPending}
+        />
       </View>
-      <Button
-        action={handleSubmit}
-        variant="primary"
-        btnName="Continue"
-        className="mt-auto"
-        isLoading={isPending}
-      />
-    </>
+    </LoginTemplate>
   );
 };
 
