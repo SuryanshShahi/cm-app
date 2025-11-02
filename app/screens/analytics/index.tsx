@@ -7,6 +7,7 @@ import tw from '../../utils/tailwind';
 import { width } from '../../utils/constants';
 import { BarChart, PieChart } from 'react-native-gifted-charts';
 import { COLORS } from '../../utils/static';
+import useHook from './useHook';
 
 const Analytics = () => {
   const data = [
@@ -28,6 +29,7 @@ const Analytics = () => {
     { value: 120, color: 'yellow', text: 'Online' },
     { value: 120, color: 'red', text: 'Social' },
   ];
+  const {} = useHook();
   return (
     <ScreenTemplate className="gap-y-6" parentClassName="bg-white">
       <View style={tw`gap-y-4`}>

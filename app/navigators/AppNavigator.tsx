@@ -10,21 +10,12 @@ import Loader from '../shared/Loader';
 
 export const AppNavigator = () => {
   const { data, setData } = useContext(GlobalContext);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setIsLoading(true);
-    AsyncStorage.getItem(localstorageKeys.AUTH_TOKEN).then(res => {
-      if (res) {
-        setData({ isLoggedIn: true });
-      } else {
-        setData({ isLoggedIn: false });
-      }
-      setIsLoading(false);
-    });
-  }, []);
-  if (isLoading) {
-    return <Loader />;
-  }
+  console.log("🚀 ~ AppNavigator ~ data:", data)
+
+  // useEffect(() => {}, []);
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
   return (
     <NavigationContainer ref={navigationRef}>
       {data?.isLoggedIn ? <DrawerNavigator /> : <LoginNavigator />}

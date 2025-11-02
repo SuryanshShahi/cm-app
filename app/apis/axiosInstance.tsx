@@ -17,6 +17,7 @@ const getBaseUrl = (name?: string) => {
 
 const getTokens = async () => {
   const tokenString = await AsyncStorage.getItem(localstorageKeys.AUTH_TOKEN);
+  console.log("🚀 ~ getTokens ~ tokenString:", tokenString)
   const token = tokenString ? JSON.parse(tokenString) : null;
   return {
     accessToken: token?.accessToken,

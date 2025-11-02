@@ -6,13 +6,11 @@ import { View } from 'react-native';
 import tw from '../../utils/tailwind';
 import HeadingWithBtn from '../../shared/HeadingWithBtn';
 import PostCard from '../../shared/cards/PostCard';
+import usePosts from '../posts/useHook';
+import ScreenNames from '../../utils/ScreenNames';
 
-const Home = () => {
-  const data = {
-    bannerImage: Config.banner,
-    description:
-      "Bharatiya Janata Party (BJP): Explore the Latest Insights, Multimedia, and Updates on BJP's Activities and Initiatives.",
-  };
+const Home = ({ navigation }: any) => {
+  const { posts } = usePosts();
   return (
     <ScreenTemplate className="gap-y-6" parentClassName="bg-white">
       <Img source={Config.banner} className="h-200px w-full rounded-lg" />
@@ -62,19 +60,14 @@ const Home = () => {
         />
       </View>
       <View style={tw`gap-y-4`}>
-        <HeadingWithBtn label="Today’s Post" btnName="View More" />
-        {Array(2)
-          .fill(data)
-          .map((_, idx) => (
-            <PostCard
-              key={idx}
-              data={{
-                banner: data.bannerImage,
-                description: data.description,
-                isLiked: false,
-              }}
-            />
-          ))}
+        <HeadingWithBtn
+          label="Today’s Post"
+          btnName="View More"
+          onPress={() => navigation.navigate(ScreenNames.POSTS)}
+        />
+        {posts?.slice(0, 2).map((item, idx) => (
+          <PostCard key={idx} data={item} />
+        ))}
       </View>
     </ScreenTemplate>
   );

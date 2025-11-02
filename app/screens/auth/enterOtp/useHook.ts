@@ -6,7 +6,9 @@ import { showToast } from '../../../utils/constants';
 import { localstorageKeys } from '../../../utils/localstorageKeys';
 import { IRequestOtp, IVerifyOtp } from '../types';
 import { GlobalContext } from '../../../context';
+import ScreenNames from '../../../utils/ScreenNames';
 const useHook = (navigation: any, route: any) => {
+  const { contact } = route.params || {};
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [count, setCount] = useState(30);
@@ -19,7 +21,12 @@ const useHook = (navigation: any, route: any) => {
   }, []);
   useEffect(() => {
     if (otp?.length === 6) {
-      submitOtp({ otp, otpId: route?.params?.otpId, mode: 'phone' });
+      submitOtp({
+        otp,
+        contact,
+        cmId: '550e8400-e29b-41d4-a716-446655440001',
+        purpose: 'login',
+      });
     } else {
       setError('');
     }
@@ -27,12 +34,30 @@ const useHook = (navigation: any, route: any) => {
   const { mutate: submitOtp, isPending } = useMutation({
     mutationFn: (body: IVerifyOtp) => verifyOtp(body),
     onSuccess: data => {
-      showToast({
-        text1: 'OTP verified',
-        type: 'success',
-      });
-      AsyncStorage.setItem(localstorageKeys.AUTH_TOKEN, JSON.stringify(data));
-      setData(p => ({ ...p, isLoggedIn: true }));
+      console.log('🚀 ~ useHook ~ data:', data?.accessToken);
+      if (data?.accessToken) {
+        showToast({
+          text1: 'OTP verified',
+          type: 'success',
+        });
+        AsyncStorage.setItem(
+          localstorageKeys.AUTH_TOKEN,
+          JSON.stringify({
+            accessToken: data?.accessToken,
+            refreshToken: data?.refreshToken,
+          }),
+        );
+        if (data?.isNewUser) {
+          navigation.navigate(ScreenNames.PROFILE, { userDetails: data?.user });
+        } else {
+          setData(p => ({ ...p, isLoggedIn: true, userDetails: data?.user }));
+        }
+      } else {
+        showToast({
+          text1: 'Otp expired',
+          type: 'error',
+        });
+      }
     },
     onError: (err: any) => {
       showToast({
@@ -44,8 +69,9 @@ const useHook = (navigation: any, route: any) => {
     mutationFn: (body: IRequestOtp) => requestOtp(body),
     onSuccess: data => {
       setOtp('');
+      setCount(30);
       showToast({
-        text1: 'OTP sent successfully',
+        text1: 'OTP sent successfully ' + data?.maskedOtp,
         type: 'success',
       });
       navigation.setParams({ otpId: data?.otpId });
@@ -57,7 +83,7 @@ const useHook = (navigation: any, route: any) => {
     },
   });
 
-  return { setOtp, error, count, isPending, resendOtp };
+  return { setOtp, error, count, isPending, resendOtp, contact, submitOtp };
 };
 
 export default useHook;

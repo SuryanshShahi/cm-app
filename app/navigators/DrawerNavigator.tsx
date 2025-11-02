@@ -102,7 +102,7 @@ function CustomDrawerContent() {
           action={() => setIsActive(true)}
         />
       </View>
-      <LogoutModal isActive={isActive} close={() => setIsActive(false)} />
+      <LogoutModal isActive={isActive} close={() => setIsActive(false)}  />
     </>
   );
 }

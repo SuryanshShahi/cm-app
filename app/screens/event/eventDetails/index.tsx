@@ -9,7 +9,26 @@ import tw from '../../../utils/tailwind';
 
 const EventDetails = () => {
   return (
-    <ScreenTemplate className="p-0" parentClassName="bg-white">
+    <ScreenTemplate
+      className="p-0"
+      parentClassName="bg-white"
+      bottomBar={
+        <View style={tw`flex-row gap-x-4`}>
+          <Button
+            btnName="Add to Calendar"
+            className="w-full flex-1"
+            icon={
+              <Feather name="plus-circle" size={18} style={tw`text-white`} />
+            }
+          />
+          <Button
+            btnName="Share Events"
+            className="w-full flex-1"
+            icon={<Feather name="share-2" size={18} style={tw`text-white`} />}
+          />
+        </View>
+      }
+    >
       <View>
         <Img source={Config.banner} className="h-200px w-full" />
         <View style={tw`absolute w-full bg-black/40 h-full justify-end p-5`}>
@@ -70,20 +89,6 @@ const EventDetails = () => {
             Location & Direction
           </Heading>
           <View style={tw`h-150px bg-gray-200`}></View>
-          <View style={tw`flex-row gap-x-4`}>
-            <Button
-              btnName="Add to Calendar"
-              className="w-full flex-1"
-              icon={
-                <Feather name="plus-circle" size={18} style={tw`text-white`} />
-              }
-            />
-            <Button
-              btnName="Share Events"
-              className="w-full flex-1"
-              icon={<Feather name="share-2" size={18} style={tw`text-white`} />}
-            />
-          </View>
         </View>
       </View>
     </ScreenTemplate>

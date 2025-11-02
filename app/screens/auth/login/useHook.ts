@@ -1,45 +1,46 @@
+import { useRoute } from '@react-navigation/native';
 import { useMutation } from '@tanstack/react-query';
 import { useFormik } from 'formik';
 import { requestOtp } from '../../../apis';
-import { loginViaPhoneSchema } from '../../../schemas';
+import { loginSchema } from '../../../schemas';
 import { showToast } from '../../../utils/constants';
 import ScreenNames from '../../../utils/ScreenNames';
 import { IRequestOtp } from '../types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { localstorageKeys } from '../../../utils/localstorageKeys';
 
 const useHook = (navigation: any) => {
+  const route = useRoute<any>();
   const initialValues = {
+    email: '',
     phone: '',
+    countryCode: '+91',
   };
   const formProps = useFormik({
     initialValues,
-    // validationSchema: loginViaPhoneSchema,
+    validationSchema: loginSchema(route.params?.mode),
     enableReinitialize: true,
     validateOnMount: true,
     onSubmit: async data => {
-      const registeredDeviceId = await AsyncStorage.getItem(
-        localstorageKeys.REGISTERED_DEVICE_ID,
-      );
       const payload = {
-        mode: 'phone',
-        identifier: '+91' + data?.phone,
-        registeredDeviceId: registeredDeviceId ?? '',
-        type: 'customer',
+        contact:
+          route.params?.mode === 'phone'
+            ? data.countryCode + data.phone
+            : data.email,
+        cmId: '550e8400-e29b-41d4-a716-446655440001',
+        purpose: 'login',
       };
-      navigation.navigate(ScreenNames.ENTER_OTP);
-      // mutate(payload);
+      mutate(payload);
     },
   });
   const { mutate, variables, isPending } = useMutation({
     mutationFn: (body: IRequestOtp) => requestOtp(body),
-    onSuccess: res => {
+    onSuccess: (res: { maskedOtp: string }) => {
+      console.log("🚀 ~ useHook ~ res:", res)
       navigation.navigate(ScreenNames.ENTER_OTP, {
-        otpId: res?.id,
-        phone: variables?.identifier,
+        contact: variables?.contact,
+        mode: route.params?.mode,
       });
       showToast({
-        text1: 'OTP sent!',
+        text1: 'OTP sent! ' + res?.maskedOtp,
         type: 'success',
       });
     },
@@ -50,6 +51,7 @@ const useHook = (navigation: any) => {
       });
     },
   });
+
   return { ...formProps, isPending };
 };
 

@@ -1,6 +1,7 @@
 export default {
   HOME_NAVIGATOR: 'homeNavigator',
-  LOGIN_VIA_PHONE: 'loginViaPhone',
+  LOGIN: 'login',
+  SELECT_MODE: 'selectMode',
   ENTER_OTP: 'enterOtp',
   PROFILE: 'profile',
   ADD_SOCIAL_ACCOUNT: 'addSocialAccount',

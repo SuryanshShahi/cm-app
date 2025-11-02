@@ -7,6 +7,7 @@ export interface IButton {
   btnName?: string;
   className?: string;
   isLoading?: boolean;
+  disabled?: boolean;
   variant?: 'primary' | 'outlined' | 'disabled' | 'link' | 'brand';
   styleBtnName?: string;
   icon?: ReactNode;
@@ -20,6 +21,7 @@ const Button: FC<PropsWithChildren<IButton>> = ({
   children,
   styleBtnName,
   icon,
+  disabled,
 }) => {
   return (
     <TouchableOpacity
@@ -29,12 +31,12 @@ const Button: FC<PropsWithChildren<IButton>> = ({
           'bg-primary text-white border-primary': variant === 'primary',
           'bg-brand border-brand': variant === 'brand',
           'border-gray-200': variant === 'outlined',
-          'bg-gray-200 border-transparent': variant === 'disabled',
+          'bg-gray-200 border-transparent': Boolean(disabled),
           'p-0 border-0 h-auto self-start rounded-none': variant === 'link',
         },
         className,
       )}
-      activeOpacity={variant === 'disabled' ? 1 : 0.5}
+      activeOpacity={disabled ? 1 : 0.5}
       onPress={() => !isLoading && variant !== 'disabled' && action?.()}
     >
       {icon}
@@ -45,7 +47,7 @@ const Button: FC<PropsWithChildren<IButton>> = ({
             {
               'text-black': variant === 'outlined',
               'text-white': variant === 'primary' || variant === 'brand',
-              'text-gray-400': variant === 'disabled',
+              'text-gray-400': Boolean(disabled),
               'opacity-0': Boolean(isLoading),
             },
             styleBtnName,

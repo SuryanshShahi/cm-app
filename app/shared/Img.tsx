@@ -1,9 +1,10 @@
 import React from 'react';
-import { Image, ImageProps } from 'react-native';
+import { Image, ImageProps, ImageSourcePropType } from 'react-native';
 import tw from '../utils/tailwind';
 
-interface IImage extends ImageProps {
+interface IImage extends Omit<ImageProps, 'source'> {
   className?: string;
+  source?: ImageSourcePropType | string;
 }
 const Img = ({ className, source, ...rest }: IImage) => {
   return (

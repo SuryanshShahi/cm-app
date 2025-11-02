@@ -11,29 +11,23 @@ import LoginTemplate from '../LoginTemplate';
 import ScreenNames from '../../../utils/ScreenNames';
 
 const EnterOtp = ({ navigation, route }: any) => {
-  const { setOtp, error, count, isPending, resendOtp } = useHook(
+  const { setOtp, error, count, isPending, contact, resendOtp } = useHook(
     navigation,
     route,
   );
   const handleSubmit = async () => {
-    const registeredDeviceId = await AsyncStorage.getItem(
-      localstorageKeys.REGISTERED_DEVICE_ID,
-    );
-    navigation.navigate(ScreenNames.PROFILE);
-    // resendOtp({
-    //   mode: 'phone',
-    //   identifier: route?.params?.phone,
-    //   registeredDeviceId: registeredDeviceId ?? '',
-    //   type: 'customer',
-    // });
+    resendOtp({
+      contact,
+      cmId: '550e8400-e29b-41d4-a716-446655440001',
+      purpose: 'login',
+    });
   };
   return (
     <LoginTemplate>
       <View style={tw`gap-y-2 self-start`}>
         <Heading size="xl">6 - Digit OTP </Heading>
         <Heading size="xs" type="medium">
-          Enter Security Code sent to +91-9443528951 / user360@gmail.com unless
-          you have account{' '}
+          Enter Security Code sent to {contact} unless you have account{' '}
         </Heading>
       </View>
       <View style={tw`w-full gap-y-4 items-center`}>
@@ -83,7 +77,7 @@ const EnterOtp = ({ navigation, route }: any) => {
         </View>
       </View>
       <Button
-        action={handleSubmit}
+        action={() => {}}
         btnName="Continue"
         isLoading={isPending}
         className="w-full"

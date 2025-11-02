@@ -6,8 +6,11 @@ import Config from '../../../assets/Config';
 import tw from '../../utils/tailwind';
 import moment from 'moment';
 import ScreenNames from '../../utils/ScreenNames';
+import useHook from './useHook';
 
 const Event = ({ navigation }: any) => {
+  const { events } = useHook();
+  console.log('🚀 ~ Event ~ events:', events);
   const data: Record<
     'ongoing' | 'upcoming',
     { title: string; events: { title: string; subtitle: string }[] }

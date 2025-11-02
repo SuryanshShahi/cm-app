@@ -12,12 +12,14 @@ const InputField = ({
   secondaryIcon,
   required,
   disabled,
+  errorMessage,
   ...rest
 }: {
   label?: string;
   className?: string;
   wrapperClassName?: string;
   required?: boolean;
+  errorMessage?: string;
   disabled?: boolean;
   primaryIcon?: ReactNode;
   secondaryIcon?: ReactNode;
@@ -30,13 +32,14 @@ const InputField = ({
           {required && <Text style={tw`text-red-500`}> *</Text>}
         </Heading>
       )}
-      <View style={tw``}>
+      <View style={tw`gap-y-1`}>
         <View style={tw`absolute left-3 top-[10px] z-10`}>{primaryIcon}</View>
         <TextInput
           style={tw.style(
             `h-11 rounded-md w-full border border-gray-300 px-3`,
             { 'pl-10': Boolean(primaryIcon), 'pr-6': Boolean(secondaryIcon) },
-            { 'bg-gray-100 text-secondary': Boolean(disabled) },
+            disabled && 'bg-gray-100 text-secondary',
+            errorMessage && 'border-red-500',
             className,
           )}
           placeholderTextColor={COLORS.secondary}
@@ -46,6 +49,9 @@ const InputField = ({
         <View style={tw`absolute right-2 top-[10px] z-10`}>
           {secondaryIcon}
         </View>
+        {errorMessage && (
+          <Text style={tw`text-xs text-red-500`}>{errorMessage}</Text>
+        )}
       </View>
     </View>
   );

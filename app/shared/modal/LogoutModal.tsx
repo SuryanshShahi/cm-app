@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Feather } from '../../utils/Icons';
 import tw from '../../utils/tailwind';
 import Button from '../buttons';
 import Heading from '../Heading';
 import ModalTemplate from './ModalTemplate';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GlobalContext } from '../../context';
 
 const LogoutModal = ({
   close,
@@ -14,7 +16,7 @@ const LogoutModal = ({
   isActive: boolean;
 }) => {
   const [loading, setLoading] = useState(false);
-
+  const { setData } = useContext(GlobalContext);
   return (
     <ModalTemplate
       hideNotch
@@ -41,7 +43,10 @@ const LogoutModal = ({
           className="w-full flex-1"
         />
         <Button
-          action={() => {}}
+          action={() => {
+            AsyncStorage.clear();
+            setData({ isLoggedIn: false });
+          }}
           btnName="Yes"
           className="w-full flex-1 bg-red-600 border-red-600"
           isLoading={loading}

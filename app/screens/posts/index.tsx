@@ -1,28 +1,20 @@
 import React from 'react';
-import Config from '../../../assets/Config';
+import { Linking } from 'react-native';
 import PostCard from '../../shared/cards/PostCard';
 import ScreenTemplate from '../../shared/ScreenTemplate';
+import useHook from './useHook';
 
 const Posts = () => {
-  const data = {
-    bannerImage: Config.banner,
-    description:
-      "Bharatiya Janata Party (BJP): Explore the Latest Insights, Multimedia, and Updates on BJP's Activities and Initiatives.",
-  };
+  const { posts } = useHook();
   return (
     <ScreenTemplate className="gap-y-4">
-      {Array(5)
-        .fill(data)
-        .map((_, idx) => (
-          <PostCard
-            key={idx}
-            data={{
-              banner: data.bannerImage,
-              description: data.description,
-              isLiked: false,
-            }}
-          />
-        ))}
+      {posts?.map((item, idx) => (
+        <PostCard
+          key={idx}
+          onPress={() => Linking.openURL(item.postLink)}
+          data={item}
+        />
+      ))}
     </ScreenTemplate>
   );
 };

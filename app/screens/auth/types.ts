@@ -1,11 +1,12 @@
 export interface IRequestOtp {
-  mode: string;
-  identifier: string;
-  registeredDeviceId: string;
-  type: string;
+  contact: string;
+  cmId: string;
+  purpose: string;
+  userId?: string;
 }
 export interface IVerifyOtp {
-  otpId: string;
   otp: string;
-  mode: string;
+  contact: string;
+  cmId: string;
+  purpose: string;
 }

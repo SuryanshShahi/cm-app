@@ -16,17 +16,18 @@ import AppNavigator from './app/navigators/AppNavigator';
 import { toastConfig } from './app/utils/static';
 import tw from './app/utils/tailwind';
 import useApp from './useApp';
+import { Loader } from './app/shared';
 
 const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
-  const { data, setData, isActive, setIsActive } = useApp();
+  const { data, setData, isActive, setIsActive, isLoading } = useApp();
 
   return (
     <GlobalContext.Provider value={{ data, setData }}>
       <QueryClientProvider client={queryClient}>
         <StatusBar translucent backgroundColor="transparent" />
-        <AppNavigator />
+        {isLoading ? <Loader /> : <AppNavigator />}
         <Toast config={toastConfig} />
         <NetworkLogs
           isActive={isActive}
