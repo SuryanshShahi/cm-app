@@ -17,7 +17,7 @@ interface IHeader {
   rightContent?: ReactNode;
   styleHeader?: string;
   onPress?: () => void;
-  customNavigation?: () => void;
+  customNavigation?: null | (() => void);
 }
 
 const Header: FC<PropsWithChildren<IHeader>> = ({
@@ -51,7 +51,7 @@ const Header: FC<PropsWithChildren<IHeader>> = ({
       >
         <TouchableOpacity
           style={tw`pr-3`}
-          activeOpacity={icon ? 1 : 0}
+          activeOpacity={icon ? 0.5 : 1}
           onPress={() => {
             if (customNavigation) {
               customNavigation();
@@ -60,7 +60,7 @@ const Header: FC<PropsWithChildren<IHeader>> = ({
             }
           }}
         >
-          {icon || <SvgArrow height={24} width={24} stroke="black" />}
+          {icon || <SvgArrow height={28} width={28} stroke="white" />}
         </TouchableOpacity>
         {children ? (
           children

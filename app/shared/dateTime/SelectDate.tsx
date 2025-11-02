@@ -20,6 +20,7 @@ interface ISelectDate {
   onSubmit: (e: { date: string }) => void;
   isValidRange?: boolean;
   required?: boolean;
+  disabled?: boolean;
   containerClassName?: string;
   className?: string;
 }
@@ -38,6 +39,7 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
   placeholder,
   containerClassName,
   className,
+  disabled,
 }) => {
   return (
     <View style={tw.style(className)}>
@@ -45,15 +47,25 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
         children
       ) : (
         <View style={tw.style(`gap-y-2`, containerClassName)}>
-          <Heading>
-            {label}
-            {required && <Text style={tw`text-red-500`}> *</Text>}
-          </Heading>
+          {label && (
+            <Heading>
+              {label}
+              {required && <Text style={tw`text-red-500`}> *</Text>}
+            </Heading>
+          )}
           <TouchableOpacity
             onPress={onPress}
-            style={tw`h-11 rounded-md w-full border border-gray-300 px-3 flex-row justify-between items-center`}
+            disabled={disabled}
+            style={tw.style(
+              `h-11 rounded-md w-full border border-gray-300 px-3 flex-row justify-between items-center`,
+              disabled && 'bg-gray-100',
+            )}
           >
-            <Text style={tw`${date ? 'text-black' : 'text-secondary'}`}>
+            <Text
+              style={tw.style(
+                date && !disabled ? 'text-black' : 'text-secondary',
+              )}
+            >
               {date || placeholder}
             </Text>
             <Feather name="calendar" size={18} style={tw`text-gray-400`} />

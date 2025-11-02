@@ -6,12 +6,14 @@ interface IScreenTemplate {
   bottomBar?: ReactNode;
   className?: string;
   parentClassName?: string;
+  styleBottomBar?: string;
 }
 const ScreenTemplate: FC<PropsWithChildren<IScreenTemplate>> = ({
   children,
   bottomBar,
   className,
   parentClassName,
+  styleBottomBar,
 }) => {
   const { top } = useSafeAreaInsets();
   return (
@@ -21,7 +23,16 @@ const ScreenTemplate: FC<PropsWithChildren<IScreenTemplate>> = ({
           {children}
         </View>
       </ScrollView>
-      {bottomBar && <View style={tw`m-4`}>{bottomBar}</View>}
+      {bottomBar && (
+        <View
+          style={tw.style(
+            `p-4 rounded-t-2xl border-gray-100 border shadow-lg bg-white`,
+            styleBottomBar,
+          )}
+        >
+          {bottomBar}
+        </View>
+      )}
     </View>
   );
 };

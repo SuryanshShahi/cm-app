@@ -27,7 +27,7 @@ export const AppNavigator = () => {
   }
   return (
     <NavigationContainer ref={navigationRef}>
-      {!data?.isLoggedIn ? <DrawerNavigator /> : <LoginNavigator />}
+      {data?.isLoggedIn ? <DrawerNavigator /> : <LoginNavigator />}
     </NavigationContainer>
   );
 };

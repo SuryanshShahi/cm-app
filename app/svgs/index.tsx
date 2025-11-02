@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { ClipPath, Defs, G, Path } from 'react-native-svg';
 
 export function SvgHome(props: any) {
   return (
@@ -100,6 +100,27 @@ export function SvgLanguage(props: any) {
       {...props}
     >
       <Path d="M21.055 12h-2a1 1 0 000 2v2h-1.184c.119-.32.18-.659.184-1a3 3 0 00-5.597-1.5 1 1 0 101.732 1 1 1 0 11.865 1.5 1 1 0 000 2 1 1 0 11-.865 1.5 1 1 0 10-1.732 1 3 3 0 005.597-1.5 2.964 2.964 0 00-.184-1h1.184v3a1 1 0 102 0v-7a1 1 0 000-2zm-11.97-.757a1 1 0 101.94-.486l-1.757-7.03a2.28 2.28 0 00-4.425 0l-1.757 7.03a1 1 0 001.939.486L5.585 9h2.94l.56 2.243zM6.086 7l.698-2.787a.292.292 0 01.546 0L8.025 7h-1.94zm7.97 0h1a1.001 1.001 0 011 1v1a1 1 0 102 0V8a3.003 3.003 0 00-3-3h-1a1 1 0 100 2zm-4 9h-1a1.001 1.001 0 01-1-1v-1a1 1 0 10-2 0v1a3.003 3.003 0 003 3h1a1 1 0 000-2z" />
+    </Svg>
+  );
+}
+export function SvgDashboard(props: any) {
+  return (
+    <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <G clipPath="url(#clip0_417_4399)">
+        <Path d="M19 5v2h-4V5h4zM9 5v6H5V5h4zm10 8v6h-4v-6h4zM9 17v2H5v-2h4zM21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z" />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_417_4399">
+          <Path fill="#fff" d="M0 0H24V24H0z" />
+        </ClipPath>
+      </Defs>
     </Svg>
   );
 }

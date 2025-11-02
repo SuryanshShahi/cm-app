@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {View, Image, ImageSourcePropType, Text} from 'react-native';
+import React, { ReactNode } from 'react';
+import { View, Image, ImageSourcePropType, Text } from 'react-native';
 import tw from '../../utils/tailwind';
 import { width } from '../../utils/constants';
 
@@ -26,8 +26,9 @@ export const BottomIcon = ({
                 : 'h-[60px] w-[60px] -top-9'
             } ${className}`
           : ''
-      }`}>
-      {icon}
+      }`}
+    >
+      <View style={tw`h-5`}>{icon}</View>
       {source && (
         <Image
           style={tw`h-5 w-5 ${width > 768 ? 'h-8 w-8' : ''} ${iconClass || ''}`}
@@ -37,7 +38,8 @@ export const BottomIcon = ({
       )}
       {Boolean(count) && (
         <View
-          style={tw`bg-primary h-4 w-4 rounded-full absolute -top-1 -right-4`}>
+          style={tw`bg-primary h-4 w-4 rounded-full absolute -top-1 -right-4`}
+        >
           <Text style={tw`text-white text-[8px] font-medium m-auto`}>
             {count}
           </Text>
@@ -57,8 +59,9 @@ export const BottomTitle = ({
   return (
     <Text
       style={tw`font-medium text-xs mt-1 ${
-        isActive ? 'text-black' : 'text-gray-400'
-      } ${width > 768 ? 'text-base' : ''}`}>
+        isActive ? 'text-brand' : 'text-black'
+      } ${width > 768 ? 'text-base' : ''}`}
+    >
       {title}
     </Text>
   );

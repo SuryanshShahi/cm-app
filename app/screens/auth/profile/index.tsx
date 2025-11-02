@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Button, Heading } from '../../../shared';
@@ -8,6 +8,7 @@ import { Feather, FontAwesome } from '../../../utils/Icons';
 import tw from '../../../utils/tailwind';
 import useHook from './useHook';
 import ScreenTemplate from '../../../shared/ScreenTemplate';
+import { GlobalContext } from '../../../context';
 
 const Profile = () => {
   const { values, setFieldValue, handleBlur } = useHook();
@@ -54,19 +55,23 @@ const Profile = () => {
       required: true,
     },
   ];
-  const data = [
-    { label: 'A+', value: '1' },
-    { label: 'A-', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
+  const gender = [
+    { label: 'Male', value: 'M' },
+    { label: 'Female', value: 'F' },
   ];
   const [isOpen, setIsOpen] = useState(false);
+  const { setData, data } = useContext(GlobalContext);
   return (
-    <ScreenTemplate bottomBar={<Button btnName="Save" />} className="gap-y-6">
+    <ScreenTemplate
+      bottomBar={
+        <Button
+          btnName="Save"
+          action={() => setData({ ...data, isLoggedIn: true })}
+        />
+      }
+      className="gap-y-6"
+      parentClassName="bg-white"
+    >
       <View style={tw`items-center gap-y-2`}>
         <Heading size="xl" type="semibold">
           Step 2
@@ -105,8 +110,7 @@ const Profile = () => {
                 style={tw`h-11 rounded-md w-full border border-gray-300 px-3`}
                 placeholderStyle={tw`text-sm text-secondary`}
                 selectedTextStyle={tw`text-sm`}
-                data={data}
-                search
+                data={gender}
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
@@ -134,7 +138,6 @@ const Profile = () => {
               }}
               onBlur={handleBlur('phone')}
               wrapperClassName="w-full"
-              // errorMessage={errors?.phone && touched?.phone ? errors?.phone : ''}
             />
           ),
         )}

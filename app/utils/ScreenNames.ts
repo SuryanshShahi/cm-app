@@ -9,4 +9,5 @@ export default {
   EVENT: 'event',
   EVENT_DETAILS: 'eventDetails',
   USER_PROFILE: 'userProfile',
+  ANALYTICS: 'analytics',
 };

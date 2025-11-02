@@ -11,6 +11,7 @@ module.exports = {
         bgColor: '#F9F9F9',
         brand: '#F47216',
         'yellow-primary': '#FBF31C',
+        'orange-primary': '#FDDCC580',
       },
       scrollPadding: {
         top: '10px',

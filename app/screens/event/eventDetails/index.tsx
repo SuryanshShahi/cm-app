@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import Config from '../../../../assets/Config';
-import { CardWrapper, Heading, Img } from '../../../shared';
-import ScreenTemplate from '../../../shared/ScreenTemplate';
-import tw from '../../../utils/tailwind';
 import Feather from 'react-native-vector-icons/Feather';
-import { AntDesign, Octicons } from '../../../utils/Icons';
+import Config from '../../../../assets/Config';
+import { Button, CardWrapper, Heading, Img } from '../../../shared';
+import ScreenTemplate from '../../../shared/ScreenTemplate';
+import { Octicons } from '../../../utils/Icons';
+import tw from '../../../utils/tailwind';
 
 const EventDetails = () => {
   return (
@@ -23,7 +23,7 @@ const EventDetails = () => {
         </View>
       </View>
       <View style={tw`p-5 gap-y-4`}>
-        <CardWrapper className="bg-[#FDDCC580]">
+        <CardWrapper className="bg-orange-primary">
           {[
             {
               label: 'Date',
@@ -69,14 +69,21 @@ const EventDetails = () => {
           <Heading size="lg" type="medium">
             Location & Direction
           </Heading>
-          <Heading>
-            Join us for an exciting rally in Uttarakhand in 2025! This event
-            promises to bring together enthusiasts from all over to celebrate
-            our love for adventure and the great outdoors. Expect thrilling
-            activities, inspiring speakers, and a chance to connect with
-            like-minded individuals. Don't miss out on this unforgettable
-            experience in the heart of the Himalayas!
-          </Heading>
+          <View style={tw`h-150px bg-gray-200`}></View>
+          <View style={tw`flex-row gap-x-4`}>
+            <Button
+              btnName="Add to Calendar"
+              className="w-full flex-1"
+              icon={
+                <Feather name="plus-circle" size={18} style={tw`text-white`} />
+              }
+            />
+            <Button
+              btnName="Share Events"
+              className="w-full flex-1"
+              icon={<Feather name="share-2" size={18} style={tw`text-white`} />}
+            />
+          </View>
         </View>
       </View>
     </ScreenTemplate>

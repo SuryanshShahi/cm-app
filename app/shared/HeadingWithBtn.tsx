@@ -3,14 +3,18 @@ import { View } from 'react-native';
 import { SvgArrow } from '../svgs';
 import tw from '../utils/tailwind';
 import Heading from './Heading';
-import Button from './buttons';
+import Button, { IButton } from './buttons';
 
 const HeadingWithBtn = ({
   label,
   className,
+  btnName,
+  onPress,
 }: {
   label: string;
   className?: string;
+  btnName?: string;
+  onPress?: () => void;
 }) => {
   return (
     <View style={tw.style(`flex-row justify-between`, className)}>
@@ -18,7 +22,7 @@ const HeadingWithBtn = ({
         {label}
       </Heading>
       <Button
-        btnName="View All"
+        btnName={btnName || 'View All'}
         styleBtnName="text-xs"
         className="gap-x-1 mt-1"
         children={
@@ -30,6 +34,7 @@ const HeadingWithBtn = ({
           />
         }
         variant="link"
+        action={onPress}
       />
     </View>
   );

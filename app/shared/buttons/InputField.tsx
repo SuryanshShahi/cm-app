@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
-import { View, TextInput, TextInputProps, Text } from 'react-native';
+import { Text, TextInput, TextInputProps, View } from 'react-native';
 import tw from '../../utils/tailwind';
 import Heading from '../Heading';
-import { SvgArrow } from '../../svgs';
+import { COLORS } from '../../utils/static';
 
 const InputField = ({
   label,
@@ -11,12 +11,14 @@ const InputField = ({
   primaryIcon,
   secondaryIcon,
   required,
+  disabled,
   ...rest
 }: {
   label?: string;
   className?: string;
   wrapperClassName?: string;
   required?: boolean;
+  disabled?: boolean;
   primaryIcon?: ReactNode;
   secondaryIcon?: ReactNode;
 } & TextInputProps) => {
@@ -34,8 +36,11 @@ const InputField = ({
           style={tw.style(
             `h-11 rounded-md w-full border border-gray-300 px-3`,
             { 'pl-10': Boolean(primaryIcon), 'pr-6': Boolean(secondaryIcon) },
+            { 'bg-gray-100 text-secondary': Boolean(disabled) },
             className,
           )}
+          placeholderTextColor={COLORS.secondary}
+          editable={!disabled}
           {...rest}
         />
         <View style={tw`absolute right-2 top-[10px] z-10`}>

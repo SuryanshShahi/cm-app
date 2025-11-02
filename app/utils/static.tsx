@@ -3,15 +3,10 @@ import {
   BaseToastProps,
   ErrorToast,
 } from 'react-native-toast-message';
-import tw from './tailwind';
 import {
-  AntDesign,
-  Entypo,
-  Feather,
-  MaterialIcons,
-  Octicons,
-  SimpleLineIcons,
+  Entypo
 } from './Icons';
+import tw from './tailwind';
 
 export const COLORS = {
   gray50: '#F9FAFB',
@@ -21,6 +16,7 @@ export const COLORS = {
   gray100: '#DBDEE2',
   gray500: '#8B96A2',
   gray400: '#9CA3AF',
+  brand: '#F47216',
 };
 export const UPPER_HEADER_HEIGHT = 260;
 export const SMALL_UPPER_HEADER_HEIGHT = 200;

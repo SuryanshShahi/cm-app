@@ -81,7 +81,9 @@ const Event = ({ navigation }: any) => {
           const isToday = day.isSame(moment(), 'day');
           return (
             <Button
-              className="flex-col w-11 h-auto px-0 py-2 gap-y-2"
+              className={`flex-col w-11 h-auto px-0 py-2 gap-y-2 ${
+                !isToday && 'border-transparent'
+              }`}
               variant={isToday ? 'brand' : 'outlined'}
               key={idx}
             >

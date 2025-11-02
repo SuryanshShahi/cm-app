@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native';
 import React, { FC, PropsWithChildren, ReactNode } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import tw from '../../utils/tailwind';
 import Loader from '../Loader';
-interface IProps {
+export interface IButton {
   action?: () => void;
   btnName?: string;
   className?: string;
@@ -11,7 +11,7 @@ interface IProps {
   styleBtnName?: string;
   icon?: ReactNode;
 }
-const Button: FC<PropsWithChildren<IProps>> = ({
+const Button: FC<PropsWithChildren<IButton>> = ({
   action,
   btnName,
   className,

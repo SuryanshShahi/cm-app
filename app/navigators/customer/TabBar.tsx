@@ -1,9 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { View } from 'react-native';
-import { GlobalContext } from '../../context';
-import Button from '../../shared/buttons';
-import { Feather, Octicons } from '../../utils/Icons';
-import ScreenNames from '../../utils/ScreenNames';
+import React, { useState } from 'react';
+import { Entypo, Feather, MaterialIcons, Octicons } from '../../utils/Icons';
 import tw from '../../utils/tailwind';
 import { BottomTabBar } from '../components/BottomTabBar';
 import { TabBarProps } from '../types';
@@ -17,25 +13,30 @@ export const CustomerTabBar = ({
   const tabData = [
     {
       title: 'Home',
-      focusIcon: <Octicons name="home" size={20} />,
-      icon: <Octicons name="home" size={20} style={tw`text-gray-400`} />,
+      focusIcon: <Octicons name="home" size={20} style={tw`text-brand`} />,
+      icon: <Octicons name="home" size={20} style={tw`text-black`} />,
     },
     {
-      title: 'Categories',
-      focusIcon: <Feather name="box" size={20} />,
-      icon: <Feather name="box" size={20} style={tw`text-gray-400`} />,
-    },
-    {
-      title: 'Cart',
-      focusIcon: <Feather name="shopping-cart" size={20} />,
-      icon: (
-        <Feather name="shopping-cart" size={20} style={tw`text-gray-400`} />
+      title: 'Posts',
+      focusIcon: (
+        <MaterialIcons name="post-add" size={22} style={tw`text-brand`} />
       ),
+      icon: <MaterialIcons name="post-add" size={22} style={tw`text-black`} />,
+    },
+    {
+      title: 'Calendar',
+      focusIcon: <Feather name="calendar" size={20} style={tw`text-brand`} />,
+      icon: <Feather name="calendar" size={20} style={tw`text-black`} />,
+    },
+    {
+      title: 'Analytics',
+      focusIcon: <Entypo name="bar-graph" size={20} style={tw`text-brand`} />,
+      icon: <Entypo name="bar-graph" size={20} style={tw`text-black`} />,
     },
     {
       title: 'Profile',
-      focusIcon: <Octicons name="person" size={20} />,
-      icon: <Octicons name="person" size={20} style={tw`text-gray-400`} />,
+      focusIcon: <Octicons name="person" size={22} style={tw`text-brand`} />,
+      icon: <Octicons name="person" size={22} style={tw`text-black`} />,
     },
   ];
 
@@ -44,31 +45,6 @@ export const CustomerTabBar = ({
     setIsActive,
     tabData,
   };
-  console.log({ state });
 
-  const { data } = useContext(GlobalContext);
-  const cartDetails = data?.customerDetails?.cart;
-  return (
-    <View style={tw`bg-bgColor`}>
-      {cartDetails && ![3, 4].includes(state.index) && (
-        <View
-          style={tw`p-4 m-4 flex-row justify-between items-center bg-white shadow-lg shadow-neutral-300 rounded-2xl`}
-        >
-          {/* <Heading
-            title={`Cart (${cartDetails.items.reduce(
-              (acc, item) => acc + item.quantity,
-              0,
-            )})`}
-          /> */}
-          <Button
-            btnName="Proceed to Cart"
-            action={() => navigation.navigate(ScreenNames.CART)}
-            className="bg-primary/10 border-0"
-            styleBtnName="text-primary"
-          />
-        </View>
-      )}
-      <BottomTabBar {...props} />
-    </View>
-  );
+  return <BottomTabBar {...props} />;
 };

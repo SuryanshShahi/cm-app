@@ -1,12 +1,12 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { Button, Heading } from '../../../shared';
-import { AntDesign, Entypo, MaterialIcons } from '../../../utils/Icons';
-import tw from '../../../utils/tailwind';
 import InputField from '../../../shared/buttons/InputField';
 import { SvgSearch } from '../../../svgs';
-import { COLORS } from '../../../utils/static';
 import { height } from '../../../utils/constants';
+import { AntDesign, Entypo, MaterialIcons } from '../../../utils/Icons';
+import { COLORS } from '../../../utils/static';
+import tw from '../../../utils/tailwind';
 
 const AddSocialAccount = () => {
   return (
