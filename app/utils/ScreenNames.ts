@@ -11,4 +11,5 @@ export default {
   EVENT_DETAILS: 'eventDetails',
   USER_PROFILE: 'userProfile',
   ANALYTICS: 'analytics',
+  FEEDBACK: 'feedback',
 };

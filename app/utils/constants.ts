@@ -15,10 +15,10 @@ export const build: 'staging' | 'prod' = 'staging';
 
 export const buildConfig = {
   staging: {
-    SERVICE_API_URL: 'http://13.200.129.8',
+    SERVICE_API_URL: 'https://unrancoured-natashia-humourless.ngrok-free.dev',
   },
   prod: {
-    SERVICE_API_URL: 'http://13.200.129.8',
+    SERVICE_API_URL: 'https://unrancoured-natashia-humourless.ngrok-free.dev',
   },
 };
 export const showToast = (rest: ToastShowParams) => Toast.show(rest);
@@ -76,6 +76,10 @@ export const find = (data: any, item: any, key?: string) =>
   data?.find((e: any) => (key ? e?.[key] : e) === item);
 
 export const requestCameraPermission = async () => {
+  if (Platform.OS === 'ios') {
+    // iOS permissions are handled automatically by the system
+    return true;
+  }
   try {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -89,20 +93,42 @@ export const requestCameraPermission = async () => {
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       console.log('Camera permission given');
+      return true;
     } else {
       console.log('Camera permission denied');
-      return 'Please allow access to your camera';
+      return false;
     }
   } catch (err) {
     console.warn(err);
+    return false;
   }
 };
 export const openCamera = async () => {
-  await requestCameraPermission();
+  const hasPermission = await requestCameraPermission();
+  if (!hasPermission) {
+    showToast({
+      text1: 'Camera permission is required',
+      type: 'error',
+    });
+    return;
+  }
   const result = await launchCamera({
     cameraType: 'front',
     mediaType: 'photo',
   });
+
+  // Handle user cancellation or errors
+  if (result.didCancel) {
+    return;
+  }
+  if (result.errorCode) {
+    showToast({
+      text1: result.errorMessage || 'Failed to open camera',
+      type: 'error',
+    });
+    return;
+  }
+
   const image = result?.assets?.[0];
   if (image) {
     try {

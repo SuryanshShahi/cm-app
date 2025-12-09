@@ -18,18 +18,18 @@ const HeadingWithBtn = ({
 }) => {
   return (
     <View style={tw.style(`flex-row justify-between`, className)}>
-      <Heading size="base" color="black" type="semibold">
+      <Heading size="lg" color="black" type="semibold">
         {label}
       </Heading>
       <Button
         btnName={btnName || 'View All'}
-        styleBtnName="text-xs"
+        styleBtnName="text-sm"
         className="gap-x-1 mt-1"
         children={
           <SvgArrow
             stroke="black"
-            height={14}
-            width={14}
+            height={16}
+            width={16}
             style={{ transform: [{ rotate: '180deg' }] }}
           />
         }

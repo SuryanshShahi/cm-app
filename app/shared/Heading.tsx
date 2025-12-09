@@ -8,6 +8,7 @@ export interface IHeading {
   className?: string;
   children: ReactNode;
   onPress?: () => void;
+  numberOfLines?: number;
 }
 const Heading: FC<PropsWithChildren<IHeading>> = ({
   children,

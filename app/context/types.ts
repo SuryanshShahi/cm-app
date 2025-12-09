@@ -14,18 +14,24 @@ export interface IAuthContext {
 }
 
 export interface IUserDetails {
+  dob: string;
+  gender: string;
   userId: string;
   cmId: string;
   email: string;
   name: string;
   phone: string;
-  aadhaarNumber: number;
+  photoUrl: string;
+  aadhaarNumber: string;
   workingWithPartySince: string;
-  aadhaarUrl: string;
+  aadharDocId: string | null;
+  photoId: string | null;
+  address: string;
+  joiningDate: string;
+  city: string;
   district: string;
   constituency: string;
   roleId: string;
   createdAt: string;
   updatedAt: string;
-  lastLoginAt: string;
 }

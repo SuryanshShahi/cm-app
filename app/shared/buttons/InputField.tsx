@@ -24,6 +24,7 @@ const InputField = ({
   primaryIcon?: ReactNode;
   secondaryIcon?: ReactNode;
 } & TextInputProps) => {
+  const isMultiline = Boolean((rest.numberOfLines ?? 1) > 1 || rest.multiline);
   return (
     <View style={tw.style(`gap-y-1`, wrapperClassName)}>
       {label && (
@@ -36,12 +37,16 @@ const InputField = ({
         <View style={tw`absolute left-3 top-[10px] z-10`}>{primaryIcon}</View>
         <TextInput
           style={tw.style(
-            `h-11 rounded-md w-full border border-gray-300 px-3`,
+            isMultiline
+              ? `rounded-md w-full border border-gray-300 px-3 py-2`
+              : `h-11 rounded-md w-full border border-gray-300 px-3`,
             { 'pl-10': Boolean(primaryIcon), 'pr-6': Boolean(secondaryIcon) },
             disabled && 'bg-gray-100 text-secondary',
             errorMessage && 'border-red-500',
             className,
           )}
+          multiline={isMultiline}
+          textAlignVertical={isMultiline ? 'top' : 'center'}
           placeholderTextColor={COLORS.secondary}
           editable={!disabled}
           {...rest}

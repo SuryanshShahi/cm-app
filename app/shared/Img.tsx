@@ -1,14 +1,14 @@
 import React from 'react';
-import { Image, ImageProps, ImageSourcePropType } from 'react-native';
+import FastImage, { FastImageProps } from 'react-native-fast-image';
 import tw from '../utils/tailwind';
 
-interface IImage extends Omit<ImageProps, 'source'> {
+interface IImage extends Omit<FastImageProps, 'source'> {
   className?: string;
-  source?: ImageSourcePropType | string;
+  source?: FastImageProps['source'] | string;
 }
 const Img = ({ className, source, ...rest }: IImage) => {
   return (
-    <Image
+    <FastImage
       source={typeof source === 'string' ? { uri: source } : source}
       {...rest}
       style={tw.style(className)}

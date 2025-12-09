@@ -16,8 +16,13 @@ const getBaseUrl = (name?: string) => {
 };
 
 const getTokens = async () => {
-  const tokenString = await AsyncStorage.getItem(localstorageKeys.AUTH_TOKEN);
-  console.log("🚀 ~ getTokens ~ tokenString:", tokenString)
+  const tempTokenString = await AsyncStorage.getItem(
+    localstorageKeys.TEMP_TOKEN,
+  );
+  const originalTokenString = await AsyncStorage.getItem(
+    localstorageKeys.AUTH_TOKEN,
+  );
+  const tokenString = tempTokenString || originalTokenString;
   const token = tokenString ? JSON.parse(tokenString) : null;
   return {
     accessToken: token?.accessToken,
@@ -69,8 +74,7 @@ const axiosInstance = (serviceName?: string) => {
         if (refreshToken) {
           try {
             // Make a request to refresh the access token
-            const tokens = await getTokens();
-            const token = await updateToken(tokens);
+            const token = await updateToken({ refreshToken });
             const { accessToken } = token;
             // Save the new access token
             await AsyncStorage.setItem(

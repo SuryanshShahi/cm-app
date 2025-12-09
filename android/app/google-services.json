@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357837752768",
+    "project_id": "cm360-737cc",
+    "storage_bucket": "cm360-737cc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357837752768:android:cc5599b82b99403322e025",
+        "android_client_info": {
+          "package_name": "com.cmapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfiXwkNLt2ESWw82ReEm1ls-rxJG27jAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

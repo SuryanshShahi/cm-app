@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -15,12 +15,16 @@ import DrawerItem from './components/DrawerItem';
 import BottomNavigator, { HeaderComponent } from './customer/BottomNavigator';
 import { useNavigation } from '@react-navigation/native';
 import LogoutModal from '../shared/modal/LogoutModal';
+import Feedback from '../screens/feedback';
+import { useQuery } from '@tanstack/react-query';
+import { GlobalContext } from '../context';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
 function CustomDrawerContent() {
   const navigation = useNavigation<any>();
   const [isActive, setIsActive] = useState(false);
+  const { data } = useContext(GlobalContext);
   const drawerItems = [
     {
       label: 'Dashboard',
@@ -77,9 +81,12 @@ function CustomDrawerContent() {
     <>
       <View style={tw`p-5 gap-y-10 h-full pt-16`}>
         <View style={tw`gap-y-2 items-center`}>
-          <Img source={Config.banner} className="h-75px w-75px rounded-full" />
+          <Img
+            source={data?.userDetails?.photoUrl}
+            className="h-75px w-75px rounded-full bg-gray-100"
+          />
           <Heading size="lg" type="semibold">
-            Suryansh
+            {data?.userDetails?.name}
           </Heading>
         </View>
         <View style={tw`gap-y-4`}>
@@ -102,7 +109,7 @@ function CustomDrawerContent() {
           action={() => setIsActive(true)}
         />
       </View>
-      <LogoutModal isActive={isActive} close={() => setIsActive(false)}  />
+      <LogoutModal isActive={isActive} close={() => setIsActive(false)} />
     </>
   );
 }
@@ -128,6 +135,14 @@ const DrawerNavigator = () => {
       <Screen
         name={ScreenNames.EVENT_DETAILS}
         component={EventDetails}
+        options={{
+          headerShown: true,
+          header: () => <HeaderComponent hideBars />,
+        }}
+      />
+      <Screen
+        name={ScreenNames.FEEDBACK}
+        component={Feedback}
         options={{
           headerShown: true,
           header: () => <HeaderComponent hideBars />,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Share, TouchableOpacity, View } from 'react-native';
+import { Linking, Share, TouchableOpacity, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
@@ -21,6 +21,8 @@ const PostCard = ({
   data: {
     id: string;
     banner: string;
+    postLink: string;
+    title: string;
     description: string;
     isLiked: boolean;
     shareUrl?: string;
@@ -47,16 +49,7 @@ const PostCard = ({
   });
   const { mutate: handleShare } = useMutation({
     mutationFn: (body: { postId: string }) => interactionShare(body),
-    onSuccess: async () => {
-      try {
-        await Share.share({
-          message: data.description,
-          url: data.shareUrl,
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-      }
-    },
+    onSuccess: async () => {},
     onError: () =>
       showToast({
         text1: 'Something went wrong',
@@ -79,18 +72,43 @@ const PostCard = ({
           <Octicons
             name={data.isLiked ? 'heart-fill' : 'heart'}
             size={24}
-            onPress={() => handleLike({ postId: data.id })}
+            onPress={() => {
+              Linking.openURL(data.postLink);
+              handleLike({ postId: data.id });
+            }}
           />
           <MaterialCommunityIcons
             name="comment-text-outline"
             size={24}
-            onPress={() => handleComment({ postId: data.id })}
+            onPress={() => {
+              Linking.openURL(data.postLink);
+              handleComment({ postId: data.id });
+            }}
           />
-          <TouchableOpacity onPress={() => handleShare({ postId: data.id })}>
+          <TouchableOpacity
+            onPress={async () => {
+              try {
+                await Share.share({
+                  message: `${data.title}\n${data.description}\n\nLink - ${data.shareUrl}`,
+                  url: data.shareUrl,
+                });
+              } catch (error) {
+                console.log('Error sharing:', error);
+              }
+              handleShare({ postId: data.id });
+            }}
+          >
             <Feather name="share-2" size={24} style={tw`text-brand`} />
           </TouchableOpacity>
         </View>
-        <Heading className="leading-5">{data.description}</Heading>
+        <View style={tw`gap-y-1`}>
+          <Heading className="leading-5 font-medium text-black" size="base">
+            {data.title}
+          </Heading>
+          <Heading className="leading-5" color="secondary">
+            {data.description}
+          </Heading>
+        </View>
       </View>
     </TouchableOpacity>
   );

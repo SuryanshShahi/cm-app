@@ -1,72 +1,96 @@
 import React, { useContext, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { GlobalContext } from '../../../context';
 import { Button, Heading } from '../../../shared';
 import InputField from '../../../shared/buttons/InputField';
 import SelectDate from '../../../shared/dateTime/SelectDate';
+import ScreenTemplate from '../../../shared/ScreenTemplate';
 import { Feather, FontAwesome } from '../../../utils/Icons';
 import tw from '../../../utils/tailwind';
 import useHook from './useHook';
-import ScreenTemplate from '../../../shared/ScreenTemplate';
-import { GlobalContext } from '../../../context';
 
-const Profile = () => {
-  const { values, setFieldValue, handleBlur } = useHook();
+const Profile = ({ navigation }: any) => {
+  const {
+    values,
+    setFieldValue,
+    handleBlur,
+    initialValues,
+    errors,
+    touched,
+    handleSubmit,
+    isPending,
+  } = useHook();
   const inputs: {
     label: string;
     placeholder: string;
     type: 'text' | 'tel' | 'dropdown' | 'date';
     required: boolean;
+    value: string;
+    key: string;
   }[] = [
     {
       label: 'Full Name',
       placeholder: 'Enter Full Name',
       type: 'text',
       required: true,
+      value: values.name,
+      key: 'name',
     },
     {
       label: 'DOB',
       placeholder: 'Select Date',
       type: 'date',
-      required: true,
+      required: false,
+      key: 'dob',
+      value: values.dob,
     },
     {
       label: 'Phone',
       placeholder: 'Enter Phone Number',
       type: 'tel',
-      required: true,
+      required: false,
+      key: 'phone',
+      value: values.phone,
     },
     {
       label: 'Gender',
       placeholder: 'Select your Gender',
       type: 'dropdown',
-      required: true,
+      required: false,
+      key: 'gender',
+      value: values.gender,
     },
     {
       label: 'Address',
       placeholder: 'Enter your Full Address',
       type: 'text',
-      required: true,
+      required: false,
+      key: 'address',
+      value: values.address,
     },
     {
       label: 'District',
       placeholder: 'Enter your District',
       type: 'text',
-      required: true,
+      required: false,
+      key: 'district',
+      value: values.district,
     },
   ];
   const gender = [
     { label: 'Male', value: 'M' },
     { label: 'Female', value: 'F' },
   ];
-  const [isOpen, setIsOpen] = useState(false);
-  const { setData, data } = useContext(GlobalContext);
+  const [isOpen, setIsOpen] = useState<string>('');
   return (
     <ScreenTemplate
       bottomBar={
         <Button
           btnName="Save"
-          action={() => setData({ ...data, isLoggedIn: true })}
+          action={handleSubmit}
+          isLoading={isPending}
+          disabled={!values.name}
         />
       }
       className="gap-y-6"
@@ -99,48 +123,70 @@ const Profile = () => {
         </Heading>
       </View>
       <View style={tw`gap-y-4`}>
-        {inputs.map(item =>
-          item.type === 'dropdown' ? (
-            <View style={tw`gap-y-1`}>
-              <Heading>
+        {inputs.map(item => {
+          const fieldName = item.key as keyof typeof initialValues;
+          const errorMessage =
+            errors[fieldName] && touched[fieldName] ? errors[fieldName] : '';
+          return (
+            <View style={tw``}>
+              <Heading size="base">
                 {item.label}
-                {item.required && <Text style={tw`text-red-500`}> *</Text>}
+                {item.required && <Text style={tw`text-red-600`}>&nbsp;*</Text>}
               </Heading>
-              <Dropdown
-                style={tw`h-11 rounded-md w-full border border-gray-300 px-3`}
-                placeholderStyle={tw`text-sm text-secondary`}
-                selectedTextStyle={tw`text-sm`}
-                data={gender}
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Select your Gender"
-                searchPlaceholder="Search..."
-                value=""
-                onChange={item => {}}
-              />
+              <View style={tw.style('w-full')}>
+                {item.type === 'date' ? (
+                  <SelectDate
+                    key={item.key}
+                    close={() => setIsOpen('')}
+                    onPress={() => setIsOpen(fieldName)}
+                    open={isOpen === item.key}
+                    date={item.value as string}
+                    onSubmit={data => {
+                      setFieldValue(fieldName, data.date);
+                      setIsOpen('');
+                    }}
+                    placeholder={item.placeholder}
+                    errorMessage={errorMessage as string}
+                  />
+                ) : item.type === 'dropdown' ? (
+                  <View style={tw`gap-y-1`}>
+                    <Dropdown
+                      style={tw.style(
+                        `h-11 rounded-md px-3 border border-gray-300`,
+                        errorMessage && 'border-red-500',
+                      )}
+                      placeholderStyle={tw`text-sm text-secondary`}
+                      selectedTextStyle={tw`text-sm`}
+                      data={gender}
+                      maxHeight={300}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={item.placeholder}
+                      value={item.value}
+                      onChange={data => {
+                        setFieldValue(fieldName, data.value);
+                      }}
+                    />
+                    {errorMessage && (
+                      <Text style={tw`text-xs text-red-500`}>
+                        {errorMessage as string}
+                      </Text>
+                    )}
+                  </View>
+                ) : (
+                  <InputField
+                    value={item.value as string}
+                    placeholder={item.placeholder}
+                    onChangeText={e => setFieldValue(fieldName, e as string)}
+                    onBlur={handleBlur(fieldName)}
+                    className={`text-sm`}
+                    errorMessage={errorMessage as string}
+                  />
+                )}
+              </View>
             </View>
-          ) : item.type === 'date' ? (
-            <SelectDate
-              {...item}
-              date=""
-              onPress={() => setIsOpen(true)}
-              close={() => setIsOpen(false)}
-              onSubmit={() => setIsOpen(false)}
-              open={isOpen}
-            />
-          ) : (
-            <InputField
-              {...item}
-              value={values?.phone}
-              onChangeText={(e: string) => {
-                setFieldValue('phone', e);
-              }}
-              onBlur={handleBlur('phone')}
-              wrapperClassName="w-full"
-            />
-          ),
-        )}
+          );
+        })}
       </View>
     </ScreenTemplate>
   );

@@ -23,6 +23,7 @@ interface ISelectDate {
   disabled?: boolean;
   containerClassName?: string;
   className?: string;
+  errorMessage?: string;
 }
 const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
   isMultipleDays,
@@ -40,6 +41,7 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
   containerClassName,
   className,
   disabled,
+  errorMessage,
 }) => {
   return (
     <View style={tw.style(className)}>
@@ -59,6 +61,7 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
             style={tw.style(
               `h-11 rounded-md w-full border border-gray-300 px-3 flex-row justify-between items-center`,
               disabled && 'bg-gray-100',
+              errorMessage && 'border-red-500',
             )}
           >
             <Text
@@ -70,6 +73,9 @@ const SelectDate: FC<PropsWithChildren<ISelectDate>> = ({
             </Text>
             <Feather name="calendar" size={18} style={tw`text-gray-400`} />
           </TouchableOpacity>
+          {errorMessage && (
+            <Text style={tw`text-xs text-red-500 -mt-1`}>{errorMessage}</Text>
+          )}
         </View>
       )}
       <PaperProvider

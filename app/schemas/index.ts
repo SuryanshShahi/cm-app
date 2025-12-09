@@ -19,8 +19,6 @@ export const loginSchema = (mode: 'phone' | 'email') =>
         : Yup.string().notRequired(),
   });
 
-
-
 export const profileFormSchema = Yup.object({
   name: Yup.string()
     .required(ErrorMessage.REQUIRED)
@@ -31,8 +29,8 @@ export const profileFormSchema = Yup.object({
     .min(2, 'Name must be at least 2 characters'),
   dob: Yup.string()
     .required(ErrorMessage.REQUIRED)
-    .matches(/^\d{2}\/\d{2}\/\d{4}$/, {
-      message: 'Please enter a valid date (DD/MM/YYYY)',
+    .matches(/^\d{4}-\d{2}-\d{2}$/, {
+      message: 'Please enter a valid date (YYYY-MM-DD)',
       excludeEmptyString: false,
     }),
   gender: Yup.string()
@@ -50,8 +48,8 @@ export const profileFormSchema = Yup.object({
     .min(2, 'City must be at least 2 characters'),
   workingSince: Yup.string()
     .required(ErrorMessage.REQUIRED)
-    .matches(/^\d{2}\/\d{2}\/\d{4}$/, {
-      message: 'Please enter a valid date (DD/MM/YYYY)',
+    .matches(/^\d{4}-\d{2}-\d{2}$/, {
+      message: 'Please enter a valid date (YYYY-MM-DD)',
       excludeEmptyString: false,
     }),
   identifier: Yup.string()

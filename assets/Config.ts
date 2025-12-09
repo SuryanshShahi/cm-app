@@ -3,4 +3,5 @@ export default {
   logoWithoutBg: require('../assets/icons/logoWithoutBg.png'),
   banner: require('../assets/banner.png'),
   spark: require('../assets/icons/spark.png'),
+  emptyState: require('../assets/icons/emptyState.png'),
 };

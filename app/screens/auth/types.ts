@@ -10,3 +10,15 @@ export interface IVerifyOtp {
   cmId: string;
   purpose: string;
 }
+
+export interface ISocialAccount {
+  connectedAccounts: {
+    platform: string;
+    account: {
+      id: string;
+      providerUid: string;
+      isActive: boolean;
+      createdAt: string;
+    };
+  }[];
+}

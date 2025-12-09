@@ -26,8 +26,10 @@ const Profile = () => {
     setFieldValue,
     handleChange,
     handleBlur,
+    handleSubmit,
     errors,
     touched,
+    isPending,
   } = useHook();
   type dates = 'dob' | 'workingSince';
   const inputFields: {
@@ -91,7 +93,7 @@ const Profile = () => {
     openCamera()
       .then(res => {
         if (res) {
-          setFieldValue('profileUrl', res);
+          setFieldValue('photo', res);
         }
       })
       .catch(err => console.log(err));
@@ -103,13 +105,20 @@ const Profile = () => {
       styleBottomBar="border-transparent shadow-none"
       bottomBar={
         isActive && (
-          <Button btnName="Save Changes" action={() => setIsActive(false)} />
+          <Button
+            btnName="Save Changes"
+            action={handleSubmit}
+            isLoading={isPending}
+          />
         )
       }
     >
       <View style={tw`flex-row items-center justify-between gap-x-4`}>
         <View style={tw`gap-x-4 flex-row items-center`}>
-          <Img source={Config.logo} className="h-75px w-75px rounded-full" />
+          <Img
+            source={values.photo?.uri || userDetails?.photoUrl}
+            className="h-75px w-75px rounded-full bg-gray-100"
+          />
           {!isActive && (
             <Heading size="lg" type="semibold">
               {userDetails?.name}
@@ -125,6 +134,8 @@ const Profile = () => {
       <View style={tw`gap-y-4`}>
         {inputFields.map(item => {
           const fieldName = item.key as keyof typeof initialValues;
+          const errorMessage =
+            errors[fieldName] && touched[fieldName] ? errors[fieldName] : '';
           return (
             <View
               style={tw.style(
@@ -145,32 +156,40 @@ const Profile = () => {
                     open={isOpen === item.key}
                     date={values[item.key as dates]}
                     onSubmit={data => {
-                      console.log({ asdd: item.key, data });
                       setFieldValue(fieldName, data.date);
                       setIsOpen('');
                     }}
                     placeholder={item.placeholder}
                     disabled={!isActive}
+                    errorMessage={errorMessage as string}
                   />
                 ) : item.type === 'dropdown' ? (
-                  <Dropdown
-                    style={tw.style(
-                      `h-11 rounded-md border border-gray-300 px-3`,
-                      !isActive && 'bg-gray-100',
+                  <View style={tw`gap-y-1`}>
+                    <Dropdown
+                      style={tw.style(
+                        `h-11 rounded-md border border-gray-300 px-3`,
+                        !isActive && 'bg-gray-100',
+                        errorMessage && 'border-red-500',
+                      )}
+                      placeholderStyle={tw`text-sm text-secondary`}
+                      selectedTextStyle={tw`text-sm`}
+                      data={gender}
+                      maxHeight={300}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={item.placeholder}
+                      value={item.value}
+                      onChange={data => {
+                        setFieldValue(fieldName, data.value);
+                      }}
+                      disable={!isActive}
+                    />
+                    {errorMessage && (
+                      <Text style={tw`text-xs text-red-500`}>
+                        {errorMessage as string}
+                      </Text>
                     )}
-                    placeholderStyle={tw`text-sm text-secondary`}
-                    selectedTextStyle={tw`text-sm`}
-                    data={gender}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={item.placeholder}
-                    value={item.value}
-                    onChange={data => {
-                      setFieldValue(fieldName, data.value);
-                    }}
-                    disable={!isActive}
-                  />
+                  </View>
                 ) : (
                   <InputField
                     value={item.value as string}
@@ -182,11 +201,7 @@ const Profile = () => {
                     }`}
                     disabled={!isActive}
                     numberOfLines={item.type === 'textarea' ? 4 : 1}
-                    errorMessage={
-                      errors[fieldName] && touched[fieldName]
-                        ? errors[fieldName]
-                        : ''
-                    }
+                    errorMessage={errorMessage as string}
                   />
                 )}
               </View>

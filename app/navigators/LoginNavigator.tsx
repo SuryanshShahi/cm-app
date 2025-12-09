@@ -6,12 +6,19 @@ import Login from '../screens/auth/login';
 import Profile from '../screens/auth/profile';
 import AddSocialAccount from '../screens/auth/addSocialAccount';
 import SelectedMode from '../screens/auth/selectMode';
+import useSharedVariables from '../utils/useSharedVariables';
+import { Loader } from '../shared';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export const LoginNavigator = () => {
+  const { tempToken, isLoading } = useSharedVariables();
+  if (isLoading) return <Loader />;
   return (
     <Navigator
+      initialRouteName={
+        tempToken ? ScreenNames.PROFILE : ScreenNames.SELECT_MODE
+      }
       screenOptions={{ headerShown: false, animation: 'fade_from_bottom' }}
     >
       <Screen name={ScreenNames.SELECT_MODE} component={SelectedMode} />

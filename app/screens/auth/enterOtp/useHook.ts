@@ -34,22 +34,29 @@ const useHook = (navigation: any, route: any) => {
   const { mutate: submitOtp, isPending } = useMutation({
     mutationFn: (body: IVerifyOtp) => verifyOtp(body),
     onSuccess: data => {
-      console.log('🚀 ~ useHook ~ data:', data?.accessToken);
       if (data?.accessToken) {
         showToast({
           text1: 'OTP verified',
           type: 'success',
         });
-        AsyncStorage.setItem(
-          localstorageKeys.AUTH_TOKEN,
-          JSON.stringify({
-            accessToken: data?.accessToken,
-            refreshToken: data?.refreshToken,
-          }),
-        );
+
         if (data?.isNewUser) {
+          AsyncStorage.setItem(
+            localstorageKeys.TEMP_TOKEN,
+            JSON.stringify({
+              accessToken: data?.accessToken,
+              refreshToken: data?.refreshToken,
+            }),
+          );
           navigation.navigate(ScreenNames.PROFILE, { userDetails: data?.user });
         } else {
+          AsyncStorage.setItem(
+            localstorageKeys.AUTH_TOKEN,
+            JSON.stringify({
+              accessToken: data?.accessToken,
+              refreshToken: data?.refreshToken,
+            }),
+          );
           setData(p => ({ ...p, isLoggedIn: true, userDetails: data?.user }));
         }
       } else {

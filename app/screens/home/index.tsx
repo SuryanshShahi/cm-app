@@ -28,6 +28,7 @@ const Home = ({ navigation }: any) => {
           <Button
             btnName="Click to write your thoughts"
             className="-mt-2px self-center px-6"
+            action={() => navigation.navigate(ScreenNames.FEEDBACK)}
           />
         </CardWrapper>
       </View>
@@ -59,7 +60,7 @@ const Home = ({ navigation }: any) => {
           className="self-center px-6"
         />
       </View>
-      <View style={tw`gap-y-4`}>
+      <View style={tw`gap-y-4 mt-6`}>
         <HeadingWithBtn
           label="Today’s Post"
           btnName="View More"

@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-    getPosts
-} from '../../apis';
+import { getPosts } from '../../apis';
 interface IPost {
   id: string;
   cmId: string;
@@ -16,19 +14,23 @@ interface IPost {
   updatedAt: string;
 }
 const useHook = () => {
-  const { data } = useQuery<{ posts: IPost[]; pagination: { limit: number } }>({
+  const { data, isLoading } = useQuery<{
+    posts: IPost[];
+    pagination: { limit: number };
+  }>({
     queryKey: ['posts'],
     queryFn: getPosts,
   });
   const posts = data?.posts.map(item => ({
     id: item.id,
     banner: item.mediaUrl,
+    title: item.title,
     description: item.description,
     isLiked: false,
     shareUrl: item.shareUrl,
     postLink: item.postLink,
   }));
-  return { posts };
+  return { posts, isLoading };
 };
 
 export default useHook;

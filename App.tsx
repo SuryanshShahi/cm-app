@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Modal, StatusBar, Text, TouchableOpacity } from 'react-native';
@@ -17,11 +17,21 @@ import { toastConfig } from './app/utils/static';
 import tw from './app/utils/tailwind';
 import useApp from './useApp';
 import { Loader } from './app/shared';
+import { foregroundNotification } from './app/utils/notifications/notificationHandler';
+import { notificationListener } from './app/utils/notifications/notificationServices';
 
 const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
   const { data, setData, isActive, setIsActive, isLoading } = useApp();
+
+  useEffect(() => {
+    // Set up foreground notification handler
+    foregroundNotification(queryClient);
+    
+    // Set up notification listeners (opened app from notification, initial notification)
+    notificationListener();
+  }, []);
 
   return (
     <GlobalContext.Provider value={{ data, setData }}>
