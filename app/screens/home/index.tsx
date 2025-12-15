@@ -2,7 +2,7 @@ import React from 'react';
 import ScreenTemplate from '../../shared/ScreenTemplate';
 import Config from '../../../assets/Config';
 import { Button, CardWrapper, Heading, Img } from '../../shared';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 import tw from '../../utils/tailwind';
 import HeadingWithBtn from '../../shared/HeadingWithBtn';
 import PostCard from '../../shared/cards/PostCard';
@@ -58,6 +58,7 @@ const Home = ({ navigation }: any) => {
         <Button
           btnName="See Top performer & Leaderboard"
           className="self-center px-6"
+          action={() => navigation.navigate(ScreenNames.LEADERBOARD)}
         />
       </View>
       <View style={tw`gap-y-4 mt-6`}>
@@ -67,7 +68,11 @@ const Home = ({ navigation }: any) => {
           onPress={() => navigation.navigate(ScreenNames.POSTS)}
         />
         {posts?.slice(0, 2).map((item, idx) => (
-          <PostCard key={idx} data={item} />
+          <PostCard
+            key={idx}
+            data={item}
+            onPress={() => Linking.openURL(item.postLink)}
+          />
         ))}
       </View>
     </ScreenTemplate>

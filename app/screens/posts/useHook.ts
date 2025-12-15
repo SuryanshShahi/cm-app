@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '../../apis';
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 interface IPost {
   id: string;
   cmId: string;
@@ -14,13 +16,18 @@ interface IPost {
   updatedAt: string;
 }
 const useHook = () => {
-  const { data, isLoading } = useQuery<{
+  const { data, isLoading, refetch } = useQuery<{
     posts: IPost[];
     pagination: { limit: number };
   }>({
     queryKey: ['posts'],
     queryFn: getPosts,
   });
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, []),
+  );
   const posts = data?.posts.map(item => ({
     id: item.id,
     banner: item.mediaUrl,

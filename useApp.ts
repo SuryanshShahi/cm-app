@@ -1,10 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import { getUserProfile, registerDevice } from './app/apis';
 import { localstorageKeys } from './app/utils/localstorageKeys';
-import DeviceInfo from 'react-native-device-info';
-import { showToast } from './app/utils/constants';
-import { Platform } from 'react-native';
 import { requestUserPermission } from './app/utils/notifications/notificationServices';
 
 export interface IRegisterDevice {
@@ -31,65 +30,42 @@ const useApp = () => {
     }
     setIsLoading(false);
   };
-  const getDeviceRegistered = async () => {
-    try {
-      const id = await DeviceInfo.getUniqueId();
-      const res = await registerDevice({
-        deviceId: id,
-        platform: Platform.OS,
-      });
-      if (res?.id) {
-        AsyncStorage.setItem(localstorageKeys.REGISTERED_DEVICE_ID, res?.id);
-      }
-    } catch (err: any) {
-      showToast({
-        text1: err?.response?.data?.response?.message ?? '',
-        type: 'error',
-      });
-    }
-  };
+  console.log({ data });
 
   useEffect(() => {
     const checkDeviceRegistered = async () => {
       const registeredDeviceId = await AsyncStorage.getItem(
         localstorageKeys.REGISTERED_DEVICE_ID,
       );
+      console.log(
+        '🚀 ~ checkDeviceRegistered ~ registeredDeviceId:',
+        registeredDeviceId,
+      );
+      const id = await DeviceInfo.getUniqueId();
+      const token = await requestUserPermission();
       if (!registeredDeviceId) {
-        const id = await DeviceInfo.getUniqueId();
-        const res = await registerDevice({
-          deviceId: id,
-          platform: Platform.OS,
-        });
-        if (res?.id) {
+        if (token) {
+          const res = await registerDevice({
+            deviceId: id,
+            platform: Platform.OS,
+            fcmToken: token,
+          });
           AsyncStorage.setItem(localstorageKeys.REGISTERED_DEVICE_ID, res?.id);
-          const token = await requestUserPermission();
-          if (token) {
-            await registerDevice({
-              deviceId: id,
-              platform: Platform.OS,
-              fcmToken: token,
-            });
-          }
+
           setData((p: any) => ({
             ...p,
             registeredDeviceId: res?.id,
             fcmToken: token,
             deviceId: id,
           }));
-        } else {
-          const fcmToken = await AsyncStorage.getItem(
-            localstorageKeys.FCM_TOKEN,
-          );
-          if (!fcmToken) {
-            const newToken = await requestUserPermission();
-            setData((p: any) => ({
-              ...p,
-              fcmToken: newToken,
-              deviceId: id,
-              registeredDeviceId: res?.id,
-            }));
-          }
         }
+      } else {
+        setData((p: any) => ({
+          ...p,
+          registeredDeviceId: registeredDeviceId,
+          fcmToken: token,
+          deviceId: id,
+        }));
       }
     };
     checkDeviceRegistered();

@@ -6,7 +6,6 @@ const useHook = () => {
     queryKey: ['analytics'],
     queryFn: getAnalytics,
   });
-  console.log('🚀 ~ useHook ~ data:', data);
 
   return {};
 };

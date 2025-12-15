@@ -12,4 +12,6 @@ export default {
   USER_PROFILE: 'userProfile',
   ANALYTICS: 'analytics',
   FEEDBACK: 'feedback',
+  NOTIFICATION: 'notification',
+  LEADERBOARD: 'leaderboard',
 };

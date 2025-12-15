@@ -5,10 +5,17 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Modal, StatusBar, Text, TouchableOpacity } from 'react-native';
+import {
+  Modal,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  AppState,
+  AppStateStatus,
+} from 'react-native';
 import NetworkLogger from 'react-native-network-logger';
 import Toast from 'react-native-toast-message';
 import { GlobalContext } from './app/context';
@@ -18,19 +25,40 @@ import tw from './app/utils/tailwind';
 import useApp from './useApp';
 import { Loader } from './app/shared';
 import { foregroundNotification } from './app/utils/notifications/notificationHandler';
-import { notificationListener } from './app/utils/notifications/notificationServices';
+import {
+  setupNotifeeForegroundHandler,
+  checkInitialNotifeeNotification,
+} from './app/utils/notifications/notifeeNotification';
 
 const queryClient = new QueryClient();
 
 function App(): React.JSX.Element {
   const { data, setData, isActive, setIsActive, isLoading } = useApp();
+  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
-    // Set up foreground notification handler
     foregroundNotification(queryClient);
-    
-    // Set up notification listeners (opened app from notification, initial notification)
-    notificationListener();
+    const unsubscribe = setupNotifeeForegroundHandler();
+    checkInitialNotifeeNotification();
+    const subscription = AppState.addEventListener(
+      'change',
+      (nextAppState: AppStateStatus) => {
+        if (
+          appState.current.match(/inactive|background/) &&
+          nextAppState === 'active'
+        ) {
+          checkInitialNotifeeNotification();
+        }
+        appState.current = nextAppState;
+      },
+    );
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+      subscription.remove();
+    };
   }, []);
 
   return (

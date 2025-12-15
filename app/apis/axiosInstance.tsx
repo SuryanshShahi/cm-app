@@ -41,10 +41,7 @@ const axiosInstance = (serviceName?: string) => {
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
       }
-      console.log(`🚀 api-req=> ${config.url}`, {
-        baseUrl: config.baseURL,
-        data: config.data,
-      });
+      // console.log(`🚀 api-req=> ${config.url}`, config);
       return config;
     },
 
@@ -100,3 +97,4 @@ const axiosInstance = (serviceName?: string) => {
 };
 
 export default axiosInstance;
+ 

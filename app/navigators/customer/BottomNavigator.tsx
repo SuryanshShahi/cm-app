@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Config from '../../../assets/Config';
 import Analytics from '../../screens/analytics';
 import Event from '../../screens/event';
@@ -8,17 +9,21 @@ import Home from '../../screens/home';
 import Posts from '../../screens/posts';
 import Profile from '../../screens/profile';
 import { Heading, Img } from '../../shared';
-import { SvgLanguage, SvgSearch } from '../../svgs';
 import { FontAwesome, Octicons } from '../../utils/Icons';
 import ScreenNames from '../../utils/ScreenNames';
 import tw from '../../utils/tailwind';
 import Header from '../components/Header';
 import { CustomerTabBar } from './TabBar';
-import { useNavigation } from '@react-navigation/native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const HeaderComponent = ({ hideBars }: { hideBars?: boolean }) => {
+export const HeaderComponent = ({
+  hideBars,
+  title,
+}: {
+  hideBars?: boolean;
+  title?: string;
+}) => {
   const navigation = useNavigation<any>();
   return (
     <Header
@@ -34,12 +39,16 @@ export const HeaderComponent = ({ hideBars }: { hideBars?: boolean }) => {
       >
         <Img source={Config.logoWithoutBg} className="h-6 w-6" />
         <Heading size="2xl" color="white" type="medium">
-          CM 360
+          {title || 'CM 360'}
         </Heading>
         <View style={tw`flex-row gap-x-3 items-center`}>
-          <SvgSearch stroke="white" />
-          <SvgLanguage fill="white" />
-          <FontAwesome name="bell-o" style={tw`text-white`} size={20} />
+          {/* <SvgSearch stroke="white" />
+          <SvgLanguage fill="white" /> */}
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ScreenNames.NOTIFICATION)}
+          >
+            <FontAwesome name="bell-o" style={tw`text-white`} size={20} />
+          </TouchableOpacity>
         </View>
       </View>
     </Header>

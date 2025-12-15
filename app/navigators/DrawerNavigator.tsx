@@ -1,11 +1,15 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Config from '../../assets/Config';
+import { GlobalContext } from '../context';
 import EventDetails from '../screens/event/eventDetails';
+import Feedback from '../screens/feedback';
+import Notification from '../screens/notification';
 import { Button, Divider, Heading, Img } from '../shared';
+import LogoutModal from '../shared/modal/LogoutModal';
 import { SvgDashboard } from '../svgs';
 import { FontAwesome5, Ionicons } from '../utils/Icons';
 import ScreenNames from '../utils/ScreenNames';
@@ -13,11 +17,7 @@ import { COLORS } from '../utils/static';
 import tw from '../utils/tailwind';
 import DrawerItem from './components/DrawerItem';
 import BottomNavigator, { HeaderComponent } from './customer/BottomNavigator';
-import { useNavigation } from '@react-navigation/native';
-import LogoutModal from '../shared/modal/LogoutModal';
-import Feedback from '../screens/feedback';
-import { useQuery } from '@tanstack/react-query';
-import { GlobalContext } from '../context';
+import Leaderboard from '../screens/leaderboard';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -57,6 +57,7 @@ function CustomDrawerContent() {
     {
       label: 'Leaderboard',
       icon: <FontAwesome5 name="users" size={16} style={tw`text-secondary`} />,
+      onPress: () => navigation.navigate(ScreenNames.LEADERBOARD),
     },
     {
       label: 'Analytics Overview',
@@ -143,6 +144,22 @@ const DrawerNavigator = () => {
       <Screen
         name={ScreenNames.FEEDBACK}
         component={Feedback}
+        options={{
+          headerShown: true,
+          header: () => <HeaderComponent hideBars />,
+        }}
+      />
+      <Screen
+        name={ScreenNames.NOTIFICATION}
+        component={Notification}
+        options={{
+          headerShown: true,
+          header: () => <HeaderComponent hideBars title="Notifications" />,
+        }}
+      />
+      <Screen
+        name={ScreenNames.LEADERBOARD}
+        component={Leaderboard}
         options={{
           headerShown: true,
           header: () => <HeaderComponent hideBars />,

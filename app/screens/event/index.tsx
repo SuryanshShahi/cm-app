@@ -13,7 +13,7 @@ import { convertDate } from '../../utils/constants';
 import { Octicons } from '../../utils/Icons';
 import ScreenNames from '../../utils/ScreenNames';
 import tw from '../../utils/tailwind';
-import useHook from './useHook';
+import useHook, { IEvent } from './useHook';
 import EmptyState from '../../shared/EmptyState';
 
 const Event = ({ navigation }: any) => {
@@ -38,7 +38,24 @@ const Event = ({ navigation }: any) => {
     }
   }, [selectedDate]);
 
-  const currentEvent = eventsByDate[moment().format('YYYY-MM-DD')]?.[0] ?? {};
+  const currentEvent: Partial<IEvent> = (() => {
+    const now = moment();
+    const sortedDates = Object.keys(eventsByDate).sort((a, b) => 
+      moment(a).diff(moment(b))
+    );
+    
+    for (const date of sortedDates) {
+      const events = eventsByDate[date] || [];
+      for (const event of events) {
+        const startTime = event.rescheduledStartTime || event.scheduledStartTime;
+        if (startTime && moment(startTime).isAfter(now)) {
+          return event;
+        }
+      }
+    }
+    return {};
+  })();
+  console.log("🚀 ~ Event ~ currentEvent:", eventsByDate) 
 
   return (
     <ScreenTemplate className="gap-y-4" parentClassName="bg-white">
@@ -84,6 +101,7 @@ const Event = ({ navigation }: any) => {
                   btnName="No"
                   className="px-5 h-9 bg-red-600 border-red-600"
                   action={() =>
+                    currentEvent.id &&
                     handleRsvp({
                       eventId: currentEvent.id,
                       body: { isAttending: false },
@@ -94,6 +112,7 @@ const Event = ({ navigation }: any) => {
                   btnName="Yes"
                   className="px-5 h-9 bg-green-600 border-green-600"
                   action={() =>
+                    currentEvent.id &&
                     handleRsvp({
                       eventId: currentEvent.id,
                       body: { isAttending: true },

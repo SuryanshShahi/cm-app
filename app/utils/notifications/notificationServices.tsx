@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-import {PermissionsAndroid, Platform} from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {registerDevice} from '../../apis';
-import {localstorageKeys} from '../localstorageKeys';
+import { registerDevice } from '../../apis';
+import { localstorageKeys } from '../localstorageKeys';
 
 export async function requestUserPermission() {
   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
@@ -38,11 +38,10 @@ export const getFCMToken = async () => {
   return token;
 };
 
-export const notificationListener = () => {
-  messaging().onNotificationOpenedApp(remoteMessage => {});
+// export const notificationListener = () => {
+//   messaging().onNotificationOpenedApp(remoteMessage => {});
 
-  // Check whether an initial notification is available
-  messaging()
-    .getInitialNotification()
-    .then(remoteMessage => {});
-};
+//   messaging()
+//     .getInitialNotification()
+//     .then(remoteMessage => {});
+// };

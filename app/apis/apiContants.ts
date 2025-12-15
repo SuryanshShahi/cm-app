@@ -1,7 +1,7 @@
 import { createUrl } from '../utils/constants';
 
 export const API_CONSTANTS = {
-  registerDevice: '/api/register-device',
+  registerDevice: '/auth/register-device',
   requestOtp: '/auth/send-otp',
   verifyOtp: '/auth/login-with-otp',
   updateToken: '/auth/refresh',
@@ -32,7 +32,8 @@ export const API_CONSTANTS = {
   linkTwitterAccount: '/auth/twitter/initiate',
   linkFacebookAccount: '/auth/facebook/initiate',
   linkInstagramAccount: '/auth/instagram/initiate',
-  shareFeedback: '',
+  shareFeedback: '/feedback',
   getSocialAccounts: '/auth/oauth/accounts',
   rsvpEvent: (eventId: string) => `/user/events/${eventId}/rsvp`,
+  getNotifications: `/user/notification`,
 };

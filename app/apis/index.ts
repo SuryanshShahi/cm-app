@@ -15,7 +15,7 @@ export const registerDevice = async (body: {
   platform: string;
 }) => {
   const res = await axiosInstance().post(API_CONSTANTS.registerDevice, body);
-  return res?.data?.data;
+  return res?.data;
 };
 
 export const requestOtp = async (body: IRequestOtp) => {
@@ -93,7 +93,10 @@ export const interactionShare = async (body: { postId: string }) => {
 // ------------------------------------------------------------------------------
 // ------------------------------------ FEEDBACK ----------------------------------
 // ------------------------------------------------------------------------------
-export const shareFeedback = async (body: { text: string }) => {
+export const shareFeedback = async (body: {
+  title: string;
+  description: string;
+}) => {
   const res = await axiosInstance().post(API_CONSTANTS.shareFeedback, body);
   return res?.data?.data;
 };
@@ -129,6 +132,10 @@ export const rsvpEvent = async (
   return res?.data?.data;
 };
 
+export const getNotifications = async () => {
+  const res = await axiosInstance().get(API_CONSTANTS.getNotifications);
+  return res?.data?.data;
+};
 // ------------------------------------------------------------------------------
 // ------------------------------------ EVENTS ----------------------------------
 // ------------------------------------------------------------------------------

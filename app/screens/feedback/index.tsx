@@ -15,7 +15,9 @@ const Feedback = () => {
       bottomBar={
         <Button
           btnName="Submit Feedback"
-          action={() => submitFeedback({ feedback })}
+          action={() =>
+            submitFeedback({ title: 'General Feedback', description: feedback })
+          }
           isLoading={isPending}
         />
       }

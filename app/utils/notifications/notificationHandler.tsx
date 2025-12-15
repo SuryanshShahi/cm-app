@@ -10,22 +10,17 @@ import { NotificationData, onDisplayNotification } from './notifeeNotification';
  */
 export const foregroundNotification = async (queryClient: QueryClient) => {
   messaging().onMessage(async remoteMessage => {
-    console.log('Foreground notification received:', remoteMessage);
-
-    // Handle notification data
     const notificationData: NotificationData = {
       title: remoteMessage.notification?.title as string,
       body: remoteMessage.notification?.body as string,
       data: remoteMessage.data as any,
     };
 
-    // Display notification using notifee
     await onDisplayNotification(notificationData);
 
-    // Invalidate queries if needed
-    if (remoteMessage.data?.type) {
-      queryClient?.invalidateQueries({ queryKey: [remoteMessage.data.type] });
-    }
+    // if (remoteMessage.data?.type) {
+    //   queryClient?.invalidateQueries({ queryKey: [remoteMessage.data.type] });
+    // }
   });
 };
 
@@ -35,8 +30,6 @@ export const foregroundNotification = async (queryClient: QueryClient) => {
  * Must be registered in index.js
  */
 export const handleBackgroundMessage = async (remoteMessage: any) => {
-  console.log('Background notification received:', remoteMessage);
-
   const notificationData: NotificationData = {
     title: remoteMessage.notification?.title as string,
     body: remoteMessage.notification?.body as string,
@@ -55,24 +48,13 @@ export const handleBackgroundMessage = async (remoteMessage: any) => {
     importance: AndroidImportance.HIGH,
   });
 
-  // Prepare notification title and body
-  const notificationTitle =
-    remoteMessage.notification?.title ||
-    remoteMessage.data?.title ||
-    'Notification';
-  const notificationBody =
-    remoteMessage.notification?.body ||
-    remoteMessage.data?.body ||
-    'You have a new notification';
-
-  // Display notification
   await notifee.displayNotification({
-    title: notificationTitle,
-    body: notificationBody,
+    title: notificationData?.title,
+    body: notificationData?.body,
     data: remoteMessage.data || {},
     android: {
       channelId: selectedChannelId,
-      smallIcon: 'notification_icon', // Make sure this icon exists in android/app/src/main/res/drawable
+      smallIcon: 'notification_icon',
       pressAction: {
         id: 'default',
         launchActivity: 'default',

@@ -34,7 +34,6 @@ const useHook = (navigation: any) => {
   const { mutate, variables, isPending } = useMutation({
     mutationFn: (body: IRequestOtp) => requestOtp(body),
     onSuccess: (res: { maskedOtp: string }) => {
-      console.log("🚀 ~ useHook ~ res:", res)
       navigation.navigate(ScreenNames.ENTER_OTP, {
         contact: variables?.contact,
         mode: route.params?.mode,

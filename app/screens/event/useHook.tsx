@@ -62,6 +62,7 @@ const useHook = () => {
       body: { isAttending: boolean };
     }) => rsvpEvent(payload.eventId, payload.body),
     onSuccess: () => {
+      refetch();
       showToast({
         text1: 'RSVP successful',
         type: 'success',
@@ -70,6 +71,7 @@ const useHook = () => {
     onError: () => {
       showToast({
         text1: 'Failed to RSVP to event',
+        type: 'error',
       });
     },
   });
