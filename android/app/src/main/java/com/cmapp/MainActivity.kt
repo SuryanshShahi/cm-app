@@ -1,11 +1,19 @@
 package com.cmapp
 
+import android.os.Bundle
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    // Show white background first, then switch to splash theme
+    // The LaunchTheme (white) is set in manifest, we switch to splash here
+    setTheme(R.style.SplashTheme)
+    super.onCreate(savedInstanceState)
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

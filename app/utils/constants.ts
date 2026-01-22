@@ -13,7 +13,7 @@ export const screenHeight = Dimensions.get('screen').height;
 
 export const build: 'staging' | 'prod' = 'staging';
 
-export const buildConfig = {
+export const buildConfig = { 
   staging: {
     SERVICE_API_URL: 'https://unrancoured-natashia-humourless.ngrok-free.dev',
   },

@@ -4,6 +4,7 @@ import { IUpdateProfile } from '../screens/profile/types';
 import { API_CONSTANTS } from './apiContants';
 import axiosInstance from './axiosInstance';
 import RNBlobUtil from 'react-native-blob-util';
+import { IConfirmInteraction } from './types';
 
 // ----------------------------------------------------------------------------
 // ------------------------------------ AUTH ----------------------------------
@@ -89,6 +90,13 @@ export const interactionShare = async (body: { postId: string }) => {
   const res = await axiosInstance().post(API_CONSTANTS.interactionShare, body);
   return res?.data?.data;
 };
+export const confirmInteraction = async (body: IConfirmInteraction) => {
+  const res = await axiosInstance().post(
+    API_CONSTANTS.confirmInteraction,
+    body,
+  );
+  return res?.data?.data;
+};
 
 // ------------------------------------------------------------------------------
 // ------------------------------------ FEEDBACK ----------------------------------
@@ -98,6 +106,13 @@ export const shareFeedback = async (body: {
   description: string;
 }) => {
   const res = await axiosInstance().post(API_CONSTANTS.shareFeedback, body);
+  return res?.data?.data;
+};
+// ------------------------------------------------------------------------------
+// ------------------------------------ LEADERBOARD ----------------------------------
+// ------------------------------------------------------------------------------
+export const getLeaderboard = async () => {
+  const res = await axiosInstance().get(API_CONSTANTS.leaderboard);
   return res?.data?.data;
 };
 // ------------------------------------------------------------------------------

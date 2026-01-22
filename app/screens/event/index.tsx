@@ -40,14 +40,15 @@ const Event = ({ navigation }: any) => {
 
   const currentEvent: Partial<IEvent> = (() => {
     const now = moment();
-    const sortedDates = Object.keys(eventsByDate).sort((a, b) => 
-      moment(a).diff(moment(b))
+    const sortedDates = Object.keys(eventsByDate).sort((a, b) =>
+      moment(a).diff(moment(b)),
     );
-    
+
     for (const date of sortedDates) {
       const events = eventsByDate[date] || [];
       for (const event of events) {
-        const startTime = event.rescheduledStartTime || event.scheduledStartTime;
+        const startTime =
+          event.rescheduledStartTime || event.scheduledStartTime;
         if (startTime && moment(startTime).isAfter(now)) {
           return event;
         }
@@ -55,7 +56,7 @@ const Event = ({ navigation }: any) => {
     }
     return {};
   })();
-  console.log("🚀 ~ Event ~ currentEvent:", eventsByDate) 
+  console.log('🚀 ~ Event ~ currentEvent:', eventsByDate);
 
   return (
     <ScreenTemplate className="gap-y-4" parentClassName="bg-white">
@@ -64,65 +65,67 @@ const Event = ({ navigation }: any) => {
       </Heading>
       <View>
         <Img source={Config.banner} className="h-200px w-full rounded-xl" />
-        <View
-          style={tw`absolute bg-black/50 h-full w-full items-center justify-center gap-y-2 rounded-xl`}
-        >
-          <Heading
-            size="base"
-            type="semibold"
-            className="text-center"
-            color="white"
+        {Object.keys(eventsByDate).length > 0 && (
+          <View
+            style={tw`absolute bg-black/50 h-full w-full items-center justify-center gap-y-2 rounded-xl`}
           >
-            Event in Uttarakhand on{' '}
-            {convertDate(currentEvent.scheduledStartTime)}
-          </Heading>
+            <Heading
+              size="base"
+              type="semibold"
+              className="text-center"
+              color="white"
+            >
+              Event in Uttarakhand on{' '}
+              {convertDate(currentEvent.scheduledStartTime)}
+            </Heading>
 
-          {currentEvent.isAttending ? (
-            <Button
-              btnName="Attending"
-              className="h-9 bg-green-600 border-green-600"
-              styleBtnName="text-sm"
-              icon={<Octicons name="check-circle" size={14} color="white" />}
-            />
-          ) : currentEvent.isRejected ? (
-            <Button
-              btnName="Not Attending"
-              className="h-9 bg-red-600 border-red-600"
-              styleBtnName="text-sm"
-              icon={<Octicons name="x-circle" size={14} color="white" />}
-            />
-          ) : (
-            <>
-              <Heading size="sm" className="text-center" color="white">
-                Are you Willing to Attend ?
-              </Heading>
-              <View style={tw`flex-row gap-x-6`}>
-                <Button
-                  btnName="No"
-                  className="px-5 h-9 bg-red-600 border-red-600"
-                  action={() =>
-                    currentEvent.id &&
-                    handleRsvp({
-                      eventId: currentEvent.id,
-                      body: { isAttending: false },
-                    })
-                  }
-                />
-                <Button
-                  btnName="Yes"
-                  className="px-5 h-9 bg-green-600 border-green-600"
-                  action={() =>
-                    currentEvent.id &&
-                    handleRsvp({
-                      eventId: currentEvent.id,
-                      body: { isAttending: true },
-                    })
-                  }
-                />
-              </View>
-            </>
-          )}
-        </View>
+            {currentEvent.isAttending ? (
+              <Button
+                btnName="Attending"
+                className="h-9 bg-green-600 border-green-600"
+                styleBtnName="text-sm"
+                icon={<Octicons name="check-circle" size={14} color="white" />}
+              />
+            ) : currentEvent.isRejected ? (
+              <Button
+                btnName="Not Attending"
+                className="h-9 bg-red-600 border-red-600"
+                styleBtnName="text-sm"
+                icon={<Octicons name="x-circle" size={14} color="white" />}
+              />
+            ) : (
+              <>
+                <Heading size="sm" className="text-center" color="white">
+                  Are you Willing to Attend ?
+                </Heading>
+                <View style={tw`flex-row gap-x-6`}>
+                  <Button
+                    btnName="No"
+                    className="px-5 h-9 bg-red-600 border-red-600"
+                    action={() =>
+                      currentEvent.id &&
+                      handleRsvp({
+                        eventId: currentEvent.id,
+                        body: { isAttending: false },
+                      })
+                    }
+                  />
+                  <Button
+                    btnName="Yes"
+                    className="px-5 h-9 bg-green-600 border-green-600"
+                    action={() =>
+                      currentEvent.id &&
+                      handleRsvp({
+                        eventId: currentEvent.id,
+                        body: { isAttending: true },
+                      })
+                    }
+                  />
+                </View>
+              </>
+            )}
+          </View>
+        )}
       </View>
       <Heading size="xl" type="semibold">
         {moment().format('MMMM YYYY')}

@@ -9,26 +9,26 @@ import React, { useEffect, useRef } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
+  AppState,
+  AppStateStatus,
   Modal,
   StatusBar,
   Text,
-  TouchableOpacity,
-  AppState,
-  AppStateStatus,
+  TouchableOpacity
 } from 'react-native';
 import NetworkLogger from 'react-native-network-logger';
+import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
 import { GlobalContext } from './app/context';
 import AppNavigator from './app/navigators/AppNavigator';
+import {
+  checkInitialNotifeeNotification,
+  setupNotifeeForegroundHandler,
+} from './app/utils/notifications/notifeeNotification';
+import { foregroundNotification } from './app/utils/notifications/notificationHandler';
 import { toastConfig } from './app/utils/static';
 import tw from './app/utils/tailwind';
 import useApp from './useApp';
-import { Loader } from './app/shared';
-import { foregroundNotification } from './app/utils/notifications/notificationHandler';
-import {
-  setupNotifeeForegroundHandler,
-  checkInitialNotifeeNotification,
-} from './app/utils/notifications/notifeeNotification';
 
 const queryClient = new QueryClient();
 
@@ -61,11 +61,17 @@ function App(): React.JSX.Element {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) {
+      SplashScreen.hide();
+    }
+  }, [isLoading]);
+
   return (
     <GlobalContext.Provider value={{ data, setData }}>
       <QueryClientProvider client={queryClient}>
         <StatusBar translucent backgroundColor="transparent" />
-        {isLoading ? <Loader /> : <AppNavigator />}
+        <AppNavigator />
         <Toast config={toastConfig} />
         <NetworkLogs
           isActive={isActive}

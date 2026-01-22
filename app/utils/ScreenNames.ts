@@ -14,4 +14,5 @@ export default {
   FEEDBACK: 'feedback',
   NOTIFICATION: 'notification',
   LEADERBOARD: 'leaderboard',
+  HELP_AND_SUPPORT: 'helpAndSupport',
 };

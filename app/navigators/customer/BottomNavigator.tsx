@@ -9,11 +9,13 @@ import Home from '../../screens/home';
 import Posts from '../../screens/posts';
 import Profile from '../../screens/profile';
 import { Heading, Img } from '../../shared';
-import { FontAwesome, Octicons } from '../../utils/Icons';
+import { AntDesign, FontAwesome, Octicons } from '../../utils/Icons';
 import ScreenNames from '../../utils/ScreenNames';
 import tw from '../../utils/tailwind';
 import Header from '../components/Header';
 import { CustomerTabBar } from './TabBar';
+import ConfirmationModal from '../../shared/ConfirmationModal';
+import { staticNavigation } from '../../utils/StaticNavigation';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -60,6 +62,7 @@ const BottomNavigator = () => {
       screenOptions={{
         headerShown: false,
         animation: 'shift',
+        lazy: false,
       }}
       initialRouteName={ScreenNames.HOME}
       tabBar={props => <CustomerTabBar {...props} />}

@@ -3,10 +3,9 @@ import {
   BaseToastProps,
   ErrorToast,
 } from 'react-native-toast-message';
-import {
-  Entypo
-} from './Icons';
+import { Entypo } from './Icons';
 import tw from './tailwind';
+import Config from '../../assets/Config';
 
 export const COLORS = {
   gray50: '#F9FAFB',
@@ -134,3 +133,39 @@ export const monthNames = [
 ];
 export const imageFallBack =
   'https://aeria-public.s3.ap-south-1.amazonaws.com/images/avatar.png';
+
+export const leaderboardData = [
+  {
+    name: 'Rakesh kumar',
+    image: Config.banner,
+    description: 'Keep supporting be best Performer',
+    spark: Config.spark,
+  },
+  {
+    name: 'Samantha Lee',
+    image: Config.banner,
+    description: 'Keep supporting be best Performer',
+    spark: Config.spark,
+  },
+
+  {
+    name: 'James Chen',
+    image: Config.banner,
+    description: 'Keep supporting be best Performer',
+    spark: Config.spark,
+  },
+
+  {
+    name: 'Aisha Patel',
+    image: Config.banner,
+    description: 'Keep supporting be best Performer',
+    spark: Config.spark,
+  },
+
+  {
+    name: 'Carlos Gomez',
+    image: Config.banner,
+    description: 'Keep supporting be best Performer',
+    spark: Config.spark,
+  },
+];

@@ -28,7 +28,7 @@ export const API_CONSTANTS = {
       endDate,
     }),
   getEventById: (eventId: string) => `/user/events/${eventId}`,
-  getAnalytics: '/user/events/analytics',
+  getAnalytics: '/users/analytics',
   linkTwitterAccount: '/auth/twitter/initiate',
   linkFacebookAccount: '/auth/facebook/initiate',
   linkInstagramAccount: '/auth/instagram/initiate',
@@ -36,4 +36,6 @@ export const API_CONSTANTS = {
   getSocialAccounts: '/auth/oauth/accounts',
   rsvpEvent: (eventId: string) => `/user/events/${eventId}/rsvp`,
   getNotifications: `/user/notification`,
+  leaderboard: '/users/leaderboard',
+  confirmInteraction: `/interactions/confirm`,
 };

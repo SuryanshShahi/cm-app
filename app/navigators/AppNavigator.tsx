@@ -7,7 +7,6 @@ import LoginNavigator from './LoginNavigator';
 
 export const AppNavigator = () => {
   const { data } = useContext(GlobalContext);
-
   return (
     <NavigationContainer ref={navigationRef}>
       {data?.isLoggedIn ? <DrawerNavigator /> : <LoginNavigator />}

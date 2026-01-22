@@ -22,10 +22,10 @@ const LoginTemplate: FC<PropsWithChildren<ILoginTemplate>> = ({
         CM 360
       </Heading>
       {children}
-      <Heading size="xs" color="secondary" className="mt-auto">
+      <Heading size="xs" color="secondary" className="mt-auto text-justify">
         To Verify with OTP , share your name, email address, language
         preference, and profile picture with CM 360. Before using this app, you
-        can review CM 360 ’s{' '}
+        can review CM 360 ’s
         <TouchableOpacity>
           <Heading size="xs" color="brand" type="semibold">
             privacy policy

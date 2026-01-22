@@ -34,7 +34,7 @@ const useHook = () => {
       getEvents(
         1,
         20,
-        'published',
+        'upcoming',
         '',
         moment().startOf('week').toISOString(),
         moment().endOf('week').toISOString(),

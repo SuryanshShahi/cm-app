@@ -30,17 +30,13 @@ const useApp = () => {
     }
     setIsLoading(false);
   };
-  console.log({ data });
 
   useEffect(() => {
     const checkDeviceRegistered = async () => {
       const registeredDeviceId = await AsyncStorage.getItem(
         localstorageKeys.REGISTERED_DEVICE_ID,
       );
-      console.log(
-        '🚀 ~ checkDeviceRegistered ~ registeredDeviceId:',
-        registeredDeviceId,
-      );
+
       const id = await DeviceInfo.getUniqueId();
       const token = await requestUserPermission();
       if (!registeredDeviceId) {

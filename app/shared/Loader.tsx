@@ -1,7 +1,8 @@
 import React from 'react';
-import {ActivityIndicator} from 'react-native';
-import {View} from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import tw from '../utils/tailwind';
+import { COLORS } from '../utils/static';
 
 const Loader = ({
   className,
@@ -19,7 +20,7 @@ const Loader = ({
       <ActivityIndicator
         size={size ? size : 'small'}
         style={tw`shadow-black py-1 ${className ?? ''}`}
-        color={color || 'gray'}
+        color={color || COLORS.brand}
       />
     </View>
   );

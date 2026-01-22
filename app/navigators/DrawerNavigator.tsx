@@ -11,13 +11,16 @@ import Notification from '../screens/notification';
 import { Button, Divider, Heading, Img } from '../shared';
 import LogoutModal from '../shared/modal/LogoutModal';
 import { SvgDashboard } from '../svgs';
-import { FontAwesome5, Ionicons } from '../utils/Icons';
+import { AntDesign, FontAwesome5, Ionicons } from '../utils/Icons';
 import ScreenNames from '../utils/ScreenNames';
 import { COLORS } from '../utils/static';
 import tw from '../utils/tailwind';
 import DrawerItem from './components/DrawerItem';
 import BottomNavigator, { HeaderComponent } from './customer/BottomNavigator';
 import Leaderboard from '../screens/leaderboard';
+import HelpAndSupport from '../screens/helpAndSupport';
+import ConfirmationModal from '../shared/ConfirmationModal';
+import { staticNavigation } from '../utils/StaticNavigation';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -65,6 +68,13 @@ function CustomDrawerContent() {
         <MaterialIcons name="analytics" size={20} style={tw`text-secondary`} />
       ),
       onPress: () => navigation.navigate(ScreenNames.ANALYTICS),
+    },
+     {
+      label: 'Help & Support',
+      icon: (
+        <MaterialIcons name="help" size={20} style={tw`text-secondary`} />
+      ),
+      onPress: () => navigation.navigate(ScreenNames.HELP_AND_SUPPORT),
     },
     {
       label: 'Settings',
@@ -160,6 +170,14 @@ const DrawerNavigator = () => {
       <Screen
         name={ScreenNames.LEADERBOARD}
         component={Leaderboard}
+        options={{
+          headerShown: true,
+          header: () => <HeaderComponent hideBars />,
+        }}
+      />
+      <Screen
+        name={ScreenNames.HELP_AND_SUPPORT}
+        component={HelpAndSupport}
         options={{
           headerShown: true,
           header: () => <HeaderComponent hideBars />,
